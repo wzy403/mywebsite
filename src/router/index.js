@@ -1,7 +1,8 @@
 // src/router/index.js
 
 import { createRouter, createWebHistory } from 'vue-router';
-import HomePage from '../views/HomePage.vue';
+// import HomePage from '../views/home/HomePage.vue';
+// import HomePage from './App.vue';
 import ProjectPage from '../views/ProjectPage.vue';
 import BlogPage from '../views/BlogPage.vue';
 import AboutPage from '../views/AboutPage.vue';
@@ -10,7 +11,7 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: HomePage,
+    // component: HomePage,
     meta: {title: 'Zhengyu Wang'}
   },
   {
