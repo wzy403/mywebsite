@@ -48,7 +48,7 @@ export default {
   },
   methods: {
     showPage(pagename){
-      window.location.href = `/${pagename}`
+      this.$router.push({ path: `/${pagename}` });
     }
   }
 };
