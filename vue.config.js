@@ -11,6 +11,8 @@ module.exports = {
       }
     }
   },
-  publicPath: '/mywebsite/'
+  publicPath: process.env.NODE_ENV === 'production'
+    ? '/mywebsite/'
+    : '/'
 }
 
