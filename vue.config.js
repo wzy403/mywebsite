@@ -10,6 +10,7 @@ module.exports = {
         changeOrigin: true
       }
     }
-  }
+  },
+  publicPath: '/mywebsite/'
 }
 
