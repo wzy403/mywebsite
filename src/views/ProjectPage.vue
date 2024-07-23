@@ -1,4 +1,5 @@
 <template>
+  <NavBarVue></NavBarVue>
   <div class="projects-container">
     <h1>Projects</h1>
     <div v-if="projects.length === 0">Loading...</div>
@@ -10,13 +11,15 @@
   </div>
 </template>
 
-<script>
+<script scoped>
 import axios from 'axios';
 import ProjectCard from '../components/ProjectCard.vue';
+import NavBarVue from '@/components/NavBar.vue';
 export default {
   name: 'ProjectPage',
   components: {
     ProjectCard,
+    NavBarVue,
   },
   data() {
     return {
@@ -24,7 +27,8 @@ export default {
     };
   },
   created() {
-    this.fetchProjects();
+    // this.fetchProjects();
+    this.projects = require('@/assets/projectesList.json');
   },
   methods: {
     async fetchProjects() {

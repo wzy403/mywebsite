@@ -7,7 +7,7 @@
   </div>
 </template>
 
-<script>
+<script scoped>
 export default {
   name: "NavBar",
   data() {

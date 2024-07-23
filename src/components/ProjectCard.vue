@@ -35,6 +35,7 @@ export default {
 .project-card {
   background: #fff;
   border: 1px solid #e1e4e8;
+  color: #000;
   border-radius: 6px;
   padding: 20px;
   box-shadow: 0 1px 3px rgba(27, 31, 35, 0.12), 0 8px 24px rgba(27, 31, 35, 0.1);
