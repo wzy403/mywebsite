@@ -24,9 +24,12 @@ jobs:
     - name: Build project
       run: npm run build
 
+    - name: List build directory
+      run: ls -alh ./dist
+
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+        github_token: ${{ secrets.GH_TOKEN }}
         publish_dir: ./dist
         cname: www.wzy403.com  # 添加自定义域名
