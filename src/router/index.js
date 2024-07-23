@@ -1,6 +1,5 @@
-// src/router/index.js
-
-import { createRouter, createWebHistory } from 'vue-router';
+// import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHashHistory } from 'vue-router';
 import HomePage from '@/views/HomePage.vue';
 // import HomePage from './App.vue';
 import ProjectPage from '@/views/ProjectPage.vue';
