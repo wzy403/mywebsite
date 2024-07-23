@@ -2,12 +2,12 @@
   <div v-if="visible" class="modal-overlay" @click.self="close">
     <div class="modal-content">
       <span class="close-button" @click="close">&times;</span>
-      <img :src="require(`@/assets/${imageSrc}`)" alt="Modal Image" height="600" width="350" />
+      <img :src="require(`@/assets/img/${imageName}`)" alt="Modal Image" height="600" width="350" />
     </div>
   </div>
 </template>
 
-<script>
+<script scoped>
 export default {
   name: 'PopModal',
   props: {
@@ -15,7 +15,7 @@ export default {
       type: Boolean,
       default: false,
     },
-    imageSrc: {
+    imageName: {
       type: String,
       required: true,
     },

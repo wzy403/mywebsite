@@ -1,5 +1,6 @@
 <!-- src/views/Home.vue -->
 <template>
+  <NavBarVue />
   <div>
     <h1>welcome!</h1>
     <section class="welcome">
@@ -20,8 +21,8 @@
         <a href="https://linkedin.com/in/wzy403" target="blank"><img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg" alt="LinkedIn" height="30" width="40" /></a>
         <a href="https://instagram.com/xdwoshiyingyan" target="blank"><img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/instagram.svg" alt="Instagram" height="30" width="40" /></a>
         <a href="https://www.leetcode.com/zhengyu-joey-wang" target="blank"><img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/leet-code.svg" alt="LeetCode" height="30" width="40" /></a>
-        <PopModal :visible="isModalVisible" :imageSrc="imageSrc" @close="isModalVisible = false"/>
-        <button class="QQ-button" @click="showModal()"><img src="../assets/QQ.svg" alt="Wechat" height="30" width="40" /></button>
+        <PopModal :visible="isModalVisible" :imageName="imageName" @close="isModalVisible = false"/>
+        <button class="QQ-button" @click="showModal()"><img src="@/assets/img/QQ.svg" alt="Wechat" height="30" width="40" /></button>
       </p>
     </section>
 
@@ -45,24 +46,25 @@
         <a href="https://www.sqlite.org/" target="_blank" rel="noreferrer"><img src="https://www.vectorlogo.zone/logos/sqlite/sqlite-icon.svg" alt="SQLite" width="40" height="40" /></a>
         <a href="https://vuejs.org/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/vuejs/vuejs-original-wordmark.svg" alt="Vue.js" width="40" height="40" /></a>
       </p>
-      <p>You can reach me at: <a href="mailto:zhengyu.wang0108@gmail.com">zhengyu.wang0108@gmail.com</a></p>
+      <p>You can reach me at: <a href="mailto:zhengyu.wang@wzy403.com" style="color: white;">zhengyu.wang@wzy403.com</a></p>
     </section>
   </div>
 </template>
 
-<script>
-
-import PopModal from "../components/PopModal.vue"
+<script scoped>
+import NavBarVue from '@/components/NavBar.vue';
+import PopModal from "@/components/PopModal.vue"
 
 export default {
   name: "AboutPage",
   components: {
-    PopModal
+    PopModal,
+    NavBarVue,
   },
   data() {
     return {
       isModalVisible: false,
-      imageSrc: 'QQ-QRCode.jpg' // 这里替换成你的图片URL
+      imageName: 'QQ-QRCode.jpg' // 这里替换成你的图片URL
     };
   },
   methods: {
@@ -81,6 +83,7 @@ export default {
 .signature {
   background-color: #f0f0f098;
   /* border-left: 4px solid #4CAF50; */
+  color: black;
   padding: 1px 20px;
   display: inline-block;
   font-style: italic;
@@ -90,7 +93,7 @@ export default {
 }
 .QQ-button{
   border: none;
-  background-color: white;
+  background: none;
   cursor: pointer;
 }
 </style>
