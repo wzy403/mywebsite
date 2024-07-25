@@ -16,4 +16,13 @@ export default {
 </script>
 
 <style scoped>
+.not-found{
+  text-align: center;
+  color: #ffff;
+  margin-top: 25vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  vertical-align: middle;
+}
 </style>

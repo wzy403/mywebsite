@@ -1,7 +1,7 @@
 <!-- src/views/Home.vue -->
 <template>
   <NavBarVue />
-  <div>
+  <div class="about">
     <h1>welcome!</h1>
     <section class="welcome">
       <h1>Hi 👋, I'm Zhengyu (Joey) Wang</h1>
@@ -76,6 +76,13 @@ export default {
 </script>
 
 <style scoped>
+.about{
+  text-align: center;
+  color: #ffff;
+  display: flex;
+  flex-direction: column;
+}
+
 .welcome {
   text-align: center;
   margin-bottom: 20px;

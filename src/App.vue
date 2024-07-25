@@ -21,8 +21,8 @@ export default {
     "-apple-system", "sans-serif";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #ffff;
+  /* text-align: center; */
+  /* color: #ffff; */
   /* margin-top: 25vh; */
   /* display: flex; */
   flex-direction: column;
