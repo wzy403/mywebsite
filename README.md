@@ -1,6 +1,6 @@
 # My Website
 
-[DEMO](https://www.wzy403.com/)
+[Go to my website](https://www.wzy403.com/)
 
 ## Overview
 
