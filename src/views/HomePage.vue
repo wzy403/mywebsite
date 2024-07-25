@@ -2,13 +2,15 @@
 <template>
   <div class="home">
     <div class="info">
-      <img
-        class="avatar"
-        src="https://avatars.githubusercontent.com/u/95310061?v=4"
-        alt="avatar"
-        width="100"
-        height="100"
-      />
+      <a href="https://github.com/wzy403" target="_blank">
+        <img
+          class="avatar"
+          src="https://avatars.githubusercontent.com/u/95310061?v=4"
+          alt="avatar"
+          width="100"
+          height="100"
+        />
+      </a>
       <h1 class="name">{{ this.name }}</h1>
       <h2 class="slogen">{{ this.slogen }}</h2>
     </div>
@@ -19,8 +21,17 @@
         <div><span>Blog</span></div>
       </div>
       <div class="project" @click="showPage('project')">
-        <img src="@/assets/img/project.svg" alt="project" width="50" height="50" />
+        <img
+          src="@/assets/img/project.svg"
+          alt="project"
+          width="50"
+          height="50"
+        />
         <div><span>Project</span></div>
+      </div>
+      <div class="notes" @click="showPage('blog')">
+        <img src="@/assets/img/notes.svg" alt="notes" width="50" height="50" />
+        <div><span class="notesspan">Notes</span></div>
       </div>
       <div class="about" @click="showPage('about')">
         <img src="@/assets/img/about.svg" alt="about" width="50" height="50" />
@@ -35,11 +46,9 @@
 </template>
 
 <script>
-
 export default {
   name: "HomePage",
-  components: {
-  },
+  components: {},
   data() {
     return {
       name: "Zhengyu (Joey) Wang",
@@ -47,15 +56,15 @@ export default {
     };
   },
   methods: {
-    showPage(pagename){
+    showPage(pagename) {
       this.$router.push({ path: `/${pagename}` });
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style scoped>
-.home{
+.home {
   font-family: "Comic Sans MS", "Helvetica Neue", "Microsoft Yahei",
     "-apple-system", "sans-serif";
   -webkit-font-smoothing: antialiased;
@@ -67,7 +76,7 @@ export default {
   justify-content: flex-start;
   vertical-align: middle;
 }
- 
+
 .avatar {
   border-radius: 100px;
   border-style: solid;
@@ -79,7 +88,7 @@ export default {
   transition: all 1s ease;
 }
 
-.avatar:hover{
+.avatar:hover {
   box-shadow: 0 0 10px #fff;
   -webkit-box-shadow: 0 0 19px #fff;
 }
@@ -107,16 +116,20 @@ export default {
   padding-bottom: 20px;
 }
 
-.hub div{
+.hub div {
   margin: 10px;
   transition: filter 0.3s ease, transform 0.3s ease;
 }
-.hub div:hover{
+.hub div:hover {
   filter: brightness(1.5) drop-shadow(0 0 10px #fff);
   transform: scale(1.1);
 }
 
-.cvspan{
+.cvspan {
   padding-right: 8px;
+}
+
+.notesspan {
+  padding-right: 4px;
 }
 </style>
