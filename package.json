@@ -8,8 +8,15 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "autoprefixer": "^10.4.19",
     "axios": "^1.7.2",
     "core-js": "^3.8.3",
+    "highlight.js": "^11.10.0",
+    "highlightjs-line-numbers.js": "^2.8.0",
+    "marked": "^13.0.2",
+    "raw-loader": "^4.0.2",
+    "sass": "^1.77.8",
+    "sass-loader": "^15.0.0",
     "vue": "^3.2.13",
     "vue-router": "^4.3.2"
   },

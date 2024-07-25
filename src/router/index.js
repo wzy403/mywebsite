@@ -4,6 +4,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import HomePage from '@/views/HomePage.vue';
 import ProjectPage from '@/views/ProjectPage.vue';
 import BlogPage from '@/views/BlogPage.vue';
+import BlogPostPage from '@/views/BlogPostPage.vue'
 import AboutPage from '@/views/AboutPage.vue';
 import NotFound from '@/views/NotFound.vue';
 
@@ -23,6 +24,11 @@ const routes = [
     path: '/blog',
     name: 'BlogPage',
     component: BlogPage,
+  },
+  {
+    path: '/blog/:id',
+    name: 'BlogPost',
+    component: BlogPostPage,
   },
   {
     path: '/about',
