@@ -13,7 +13,7 @@
 
 <script scoped>
 import axios from 'axios';
-import ProjectCard from '../components/ProjectCard.vue';
+import ProjectCard from '@/components/ProjectCard.vue';
 import NavBarVue from '@/components/NavBar.vue';
 export default {
   name: 'ProjectPage',
@@ -49,6 +49,8 @@ export default {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
+  text-align: center;
+  color: #fff;
 }
 
 .projects-grid {
