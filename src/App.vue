@@ -29,4 +29,11 @@ export default {
   justify-content: flex-start;
   vertical-align: middle;
 }
+
+@media (max-width: 430px) {
+  .app{
+    transform: scale(0.8);
+    transform-origin: top left;
+  }
+}
 </style>

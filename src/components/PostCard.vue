@@ -42,6 +42,7 @@ export default {
 }
 
 .PostCard:hover {
+  cursor: pointer;
   transform: scale(1.01);
 }
 
@@ -56,5 +57,19 @@ export default {
   height: 100%;
   width: 100%;
   font-size: large;
+}
+
+@media (max-width: 768px) {
+  .PostCard {
+    margin: 5px;
+    padding: 10px;
+    font-size: 0.9em;
+  }
+
+  .post-title {
+    font-size: medium;
+    white-space: normal;
+    word-wrap: break-word;
+  }
 }
 </style>
