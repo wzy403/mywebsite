@@ -19,26 +19,31 @@ const routes = [
     path: '/project',
     name: 'ProjectPage',
     component: ProjectPage,
+    meta: {title: 'Zhengyu Wang'}
   },
   {
     path: '/blog',
     name: 'BlogPage',
     component: BlogPage,
+    meta: {title: 'Zhengyu Wang'}
   },
   {
     path: '/blog/:id',
     name: 'BlogPost',
     component: BlogPostPage,
+    meta: {title: 'Zhengyu Wang'}
   },
   {
     path: '/about',
     name: 'AboutPage',
     component: AboutPage,
+    meta: {title: 'Zhengyu Wang'}
   },
   {
     path: '/:catchAll(.*)',
     name: 'notfound',
-    component: NotFound
+    component: NotFound,
+    meta: {title: 'Zhengyu Wang'}
   }
 ];
 
