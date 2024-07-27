@@ -1,5 +1,8 @@
 <!-- src/views/Home.vue -->
 <template>
+  <a href="http://www.github.com/wzy403" target="_blank" rel="noopener noreferrer">
+    <img class="github" src="@/assets/img/github-mark-white.svg" alt="github" width="50" height="50" />
+  </a>
   <div class="home">
     <div class="info">
       <a href="https://github.com/wzy403" target="_blank">
@@ -75,6 +78,20 @@ export default {
   flex-direction: column;
   justify-content: flex-start;
   vertical-align: middle;
+}
+
+.github{
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 5px;
+  transform: rotate(45deg);
+  transition: filter 0.5s ease, transform 0.3s ease;
+}
+
+.github:hover {
+  filter: brightness(1.5) drop-shadow(0 0 10px #fff);
+  transform: rotate(45deg);
 }
 
 .avatar {
