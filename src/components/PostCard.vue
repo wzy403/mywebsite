@@ -72,4 +72,18 @@ export default {
     word-wrap: break-word;
   }
 }
+
+@media (max-width: 430px) {
+  .PostCard {
+    margin: 0;
+    padding: 0;
+    font-size: 0.9em;
+  }
+
+  .post-title {
+    font-size: medium;
+    white-space: normal;
+    word-wrap: break-word;
+  }
+}
 </style>

@@ -171,4 +171,20 @@ export default {
     font-size: 0.9em;
   }
 }
+@media (max-width: 431px) {
+
+  .blog-list {
+    padding: 15px;
+    margin-left: 0;
+  }
+
+  .blog-post {
+    margin: 10px 0;
+    width: 100%;
+  }
+
+  .post-date {
+    font-size: 0.8em;
+  }
+}
 </style>
