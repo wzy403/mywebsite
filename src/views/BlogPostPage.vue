@@ -103,7 +103,7 @@ export default {
   margin-left: auto;
   margin-right: auto;
   
-  left: 11.5%;
+  left: 9%;
   background-color: #fff;
   width: 100%;
   min-height: 100%; /* 使用min-height而不是height */
@@ -155,5 +155,12 @@ code {
 img {
   vertical-align: middle;
   border-style: none;
+}
+
+@media (max-width: 768px) {
+  .BlogPostPage{
+    transform: scale(0.9);
+    transform-origin: top center;
+  }
 }
 </style>

@@ -3,7 +3,7 @@
   <NavBarVue />
   <div class="blog-page">
     <h1 class="title">Blog</h1>
-    <div class="blog-continer">
+    <div class="blog-container">
       <div class="blog-list">
         <div v-for="year in postsYear" :key="year">
           <h1>{{ year }}</h1>
@@ -122,7 +122,7 @@ export default {
   height: 100%;
 }
 
-.blog-continer {
+.blog-container {
   position: relative;
   background-color: #fff;
   color: #000;
@@ -153,5 +153,22 @@ export default {
 
 .title {
   text-align: center;
+}
+
+@media (max-width: 768px) {
+
+  .blog-list {
+    padding: 20px;
+    margin-left: 0;
+  }
+
+  .blog-post {
+    margin: 10px 0;
+    width: 100%;
+  }
+
+  .post-date {
+    font-size: 0.9em;
+  }
 }
 </style>
