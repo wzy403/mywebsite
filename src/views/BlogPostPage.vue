@@ -163,4 +163,14 @@ img {
     transform-origin: top center;
   }
 }
+
+@media (max-width: 431px) {
+  .BlogPostPage{
+    transform: scale(0.9);
+    transform-origin: top left;
+  }
+  .main{
+    left: 9.5%;
+  }
+}
 </style>
