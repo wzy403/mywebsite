@@ -42,10 +42,10 @@ tags:
 ## 实机演示图
 
 #### 主页+选课
-![v1主页](./img/uoftbox/v1主页.jpg)
+![v1主页](./blogImg/uoftbox/v1主页.jpg)
 
 #### 选择更多课表
-![v1选表页](./img/uoftbox/v1选表页.jpg)
+![v1选表页](./blogImg/uoftbox/v1选表页.jpg)
 
 ---
 
@@ -79,8 +79,8 @@ tags:
 ## 演示图
 
 #### 展示路程&时间功能
-![查看路程与时间](./img/uoftbox/v2查看路程与时间.jpg)
+![查看路程与时间](./blogImg/uoftbox/v2查看路程与时间.jpg)
 #### 用户自定义课程时间功能
-![自由选择课程时间](./img/uoftbox/v2选时间段.jpg)
+![自由选择课程时间](./blogImg/uoftbox/v2选时间段.jpg)
 #### 移动端适配
-![移动端适配展示](./img/uoftbox/v2移动端适配.jpg)
+![移动端适配展示](./blogImg/uoftbox/v2移动端适配.jpg)
