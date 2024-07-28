@@ -44,13 +44,16 @@ Blog posts are written in Markdown and should be placed in the `src/assets/blog`
 id: 114514
 title: example title
 date: yyyy-MM-dd
-tags: tags record in `blogTags.json` file (split by a comma).
+tags: 
+  - sample tags1
+  - sample tags2
 ---
 ```
 
 - `id`: A unique identifier for the post.
 - `title`: The title of the blog post.
 - `date`: The publication date of the post in `yyyy-MM-dd` format.
+- `tags`: The tags for each post record in `blogTags.json` file (split by a `-`).
 
 ## Folder Structure
 
@@ -60,6 +63,8 @@ mywebsite/
 ├── src/
 │   ├── assets/
 │   │   └── blog/
+│   │   │   └── blogImg/
+│   │   └── img/
 │   ├── components/
 |   ├── router/
 │   ├── views/
