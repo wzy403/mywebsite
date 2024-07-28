@@ -83,12 +83,12 @@ export default {
           }
 
           content = content.replace(imgRegex, (whole, alt, src) => {
-            const localPath = src.match(/img\/(.+)/);
+            const localPath = src.match(/blogImg\/(.+)/);
 
             if(!localPath || !localPath[1]){
               return whole;
             }
-            const imagePath = require(`@/assets/blog/img/${localPath[1]}`);
+            const imagePath = require(`@/assets/blog/blogImg/${localPath[1]}`);
             // console.log("Image Path:", imagePath);
             return `![${alt}](${imagePath})`;
           });
