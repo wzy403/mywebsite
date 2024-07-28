@@ -34,6 +34,7 @@ export default {
   flex: 5 1 0%;
   min-width: 0;
   margin: 10px;
+  padding-right: 2em;
   background: linear-gradient(rgb(244, 244, 244), rgb(246, 246, 246));
   text-transform: capitalize;
   line-height: 1.2;
@@ -63,6 +64,7 @@ export default {
   .PostCard {
     margin: 5px;
     padding: 10px;
+    padding-right: 2em;
     font-size: 0.9em;
   }
 
@@ -77,6 +79,7 @@ export default {
   .PostCard {
     margin: 0;
     padding: 0;
+    padding-right: 2em;
     font-size: 0.9em;
   }
 

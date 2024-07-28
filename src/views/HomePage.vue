@@ -5,7 +5,7 @@
   </a>
   <div class="home">
     <div class="info">
-      <a href="https://github.com/wzy403" target="_blank">
+      <a href="https://github.com/wzy403" target="_blank" style="margin: 0;">
         <img
           class="avatar"
           src="https://avatars.githubusercontent.com/u/95310061?v=4"
@@ -84,7 +84,7 @@ export default {
   position: absolute;
   top: 0;
   right: 0;
-  margin: 5px;
+  margin: 10px;
   transform: rotate(45deg);
   transition: filter 0.5s ease, transform 0.3s ease;
 }
