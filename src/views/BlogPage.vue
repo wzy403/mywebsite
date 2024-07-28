@@ -158,15 +158,15 @@ export default {
   margin: 13px 2em;
   align-items: center;
   color: rgb(89, 89, 89);
-  flex-direction: row;  /* Ensure items are in a row */
-  justify-content: flex-start; /* Align items to the start */
+  flex-direction: row; 
+  justify-content: flex-start;
 }
 
 .post-date {
   color: #000;
   margin-right: 20px;
-  min-width: 100px; /* Ensure consistent width for dates */
-  text-align: right; /* Align text to the right for better visual alignment */
+  min-width: 100px;
+  text-align: right;
 }
 
 .title {
