@@ -44,6 +44,7 @@ Blog posts are written in Markdown and should be placed in the `src/assets/blog`
 id: 114514
 title: example title
 date: yyyy-MM-dd
+tags: tags record in `blogTags.json` file (split by a comma).
 ---
 ```
 

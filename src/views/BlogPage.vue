@@ -54,7 +54,18 @@ export default {
   },
   created() {
     this.initBlogList();
-    this.postsYear.sort();
+    this.postsYear.sort().reverse();
+    for(let year of this.postsYear){
+      this.postsObject[year].sort((a, b) => {
+        if(a.date > b.date){
+          return -1;
+        }
+        if(a.dataInfo < b.date){
+          return 1;
+        }
+        return 0;
+      });
+    }
     console.log("seccuss fetch the blog");
   },
   methods: {
@@ -62,7 +73,7 @@ export default {
       this.$router.push({ path: `/blog/${id}` });
     },
     formatDate(date) {
-      const options = { year: "numeric", month: "short", day: "numeric" };
+      const options = { year: "numeric", month: "short", day: "numeric", timeZone: "UTC" };
       return new Date(date).toLocaleDateString("en-US", options);
     },
     getAllFileName() {
@@ -84,11 +95,11 @@ export default {
         const file = require(`@/assets/blog/${name}`).default;
         // const regex = /^---\s*id:\s*(\d+)\s*title:\s*(.+)\s*date:\s*([\d-]+)\s*---\s*([\s\S]*)/;
         
-        const regex = /^---\s*id:\s*(\d+)\s*title:\s*(.+)\s*date:\s*([\d-]+)\s*---/;
+        const regex = /^---\s*id:\s*(\d+)\s*title:\s*(.+)\s*date:\s*([\d-]+)\s*tags:\s*([\s\S]+?)\s*---/m;
         
         const info = file.match(regex);
-        if (info && info.length == 4) {
-          // let content = match[4];
+        if (info && info.length == 5) {
+          
           const getYearRegex = /(\d{4})-\d{2}-\d{2}/;
           const dataInfo = info[3].match(getYearRegex);
           const year = dataInfo[1];
@@ -102,6 +113,9 @@ export default {
             title: info[2],
             date: info[3],
           });
+        }else{
+          console.log("unseccuss get file below");
+          console.log(info[0]);
         }
       }
       if(blogYear){
@@ -144,11 +158,15 @@ export default {
   margin: 13px 2em;
   align-items: center;
   color: rgb(89, 89, 89);
+  flex-direction: row;  /* Ensure items are in a row */
+  justify-content: flex-start; /* Align items to the start */
 }
 
 .post-date {
   color: #000;
   margin-right: 20px;
+  min-width: 100px; /* Ensure consistent width for dates */
+  text-align: right; /* Align text to the right for better visual alignment */
 }
 
 .title {

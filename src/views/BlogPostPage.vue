@@ -68,19 +68,38 @@ export default {
       for (let name of fileNames) {
         const file = require(`@/assets/blog/${name}`).default;
         const regex =
-          /^---\s*id:\s*(\d+)\s*title:\s*(.+)\s*date:\s*([\d-]+)\s*---\s*([\s\S]*)/;
+          /^---\s*id:\s*(\d+)\s*title:\s*(.+)\s*date:\s*([\d-]+)\s*tags:\s*([\s\S]+?)\s*---\s*([\s\S]*)/m;
         // const regex = /^---\s*id:\s*(\d+)\s*title:\s*(.+)\s*date:\s*([\d-]+)\s*---/;
-        const match = file.match(regex);
-        if (match && match[1] === postID) {
-          this.post.title = match[2];
-          this.post.date = match[3];
-          return match[4];
+        const fileInfo = file.match(regex);
+        if (fileInfo && fileInfo[1] === postID) {
+          this.post.title = fileInfo[2];
+          this.post.date = fileInfo[3];
+          let content = fileInfo[5];
+          
+          const imgRegex = /!\[([^\]]+)\]\(([^)]+)\)/g;
+          if(!imgRegex.test(content)){
+            return content;
+          }
+
+          content = content.replace(imgRegex, (whole, alt, src) => {
+            const localPath = src.match(/img\/(.+)/);
+
+            if(!localPath || !localPath[1]){
+              return whole;
+            }
+            const imagePath = require(`@/assets/blog/img/${localPath[1]}`);
+            // console.log("Image Path:", imagePath);
+            return `![${alt}](${imagePath})`;
+          });
+          
+          // console.log("Updated Content:", content);
+          return content;
         }
-        this.$$router.push(`/notfound`);
       }
+      this.$$router.push(`/notfound`);
     },
     formatDate(date) {
-      const options = { year: "numeric", month: "short", day: "numeric" };
+      const options = { year: "numeric", month: "short", day: "numeric", timeZone: "UTC" };
       return new Date(date).toLocaleDateString("en-US", options);
     },
   },
@@ -103,12 +122,14 @@ export default {
   margin-left: auto;
   margin-right: auto;
   
-  left: 9%;
+  left: 10%;
+  right: 10%;
+  margin: auto;
   background-color: #fff;
   width: 100%;
-  min-height: 100%; /* 使用min-height而不是height */
+  min-height: 100%;
   box-shadow: 0 0 20px #b9b1b1;
-  overflow: auto; /* 允许滚动 */
+  overflow: auto;
 }
 .title-bar {
   text-align: center;
@@ -152,9 +173,14 @@ code {
   border-radius: 5px;
   color: rgb(245, 81, 81);
 }
-img {
-  vertical-align: middle;
-  border-style: none;
+
+.content img {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  height: auto;
+  transform: none;
+  transform-origin: center;
 }
 
 @media (max-width: 768px) {

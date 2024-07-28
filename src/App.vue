@@ -1,7 +1,4 @@
 <template>
-  <a href="http://www.github.com/wzy403" target="_blank" rel="noopener noreferrer">
-    <img class="github" src="@/assets/img/github-mark-white.svg" alt="github" width="50" height="50" />
-  </a>
   <div id="'app'">
     <router-view></router-view>
   </div>
@@ -31,14 +28,6 @@ export default {
   flex-direction: column;
   justify-content: flex-start;
   vertical-align: middle;
-}
-
-.github{
-  position: absolute;
-  top: 0;
-  right: 0;
-  margin: 5px;
-  transform: rotate(45deg);
 }
 
 @media (max-width: 768px) {
