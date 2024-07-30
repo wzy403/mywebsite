@@ -109,10 +109,12 @@ export default {
 
 <style>
 .BlogPostPage {
+  position: relative;
   background: none;
   height: 100%;
   padding-top: 2rem;
   padding-bottom: 2rem;
+  right: 1.1vh;
   width: 80%;
 }
 .main{
@@ -124,14 +126,13 @@ export default {
   margin-right: auto;
   
   left: 10%;
-  right: 10%;
-  margin: auto;
   background-color: #fff;
   width: 100%;
   min-height: 100%;
   box-shadow: 0 0 20px #b9b1b1;
   overflow: auto;
 }
+
 .title-bar {
   text-align: center;
 }
@@ -139,7 +140,7 @@ export default {
   position: relative;
 
   padding-left: 1rem;
-  padding-right: 3rem;
+
   margin-left: auto;
   margin-right: auto;
 }
@@ -152,10 +153,13 @@ export default {
   border-right: 1px solid #999;
   vertical-align: top;
   padding-right: 5px;
+  word-break: normal;
 }
 .content code {
   font-family: "Consolas", "Fira Code", monospace;
-  white-space: pre;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-x: auto;
 }
 blockquote {
   background: rgb(249, 249, 249);
@@ -163,6 +167,7 @@ blockquote {
   padding: 15px 20px;
   margin: 20px 0px;
 }
+
 code {
   font-size: 0.85em;
   font-family: Consolas, "Bitstream Vera Sans Mono", "Courier New", Courier,
@@ -197,7 +202,7 @@ code {
     transform-origin: top left;
   }
   .main{
-    left: 9.5%;
+    left: 13%;
   }
 }
 </style>
