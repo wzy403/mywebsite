@@ -7,8 +7,23 @@
           <h1 class="title">{{ post.title }}</h1>
           <span class="title">{{ formatDate(post.date) }}</span>
         </div>
+
         <div class="container">
           <div class="content" v-html="postContent"></div>
+        </div>
+
+        <div class="footer">
+          <div class="finish">
+            <span class="finish-word">完</span>
+          </div>
+          <div class="info">
+            <div class="author">
+              <span>Author: Zhengyu Wang</span>
+            </div>
+            <div class="copy-right">
+              <span>Copyright © {{ this.copyRightYear }}</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -39,12 +54,13 @@ export default {
         date: "",
       },
       postContent: "",
+      copyRightYear: 2024,
     };
   },
   mounted() {
     hljs.highlightAll(); // highlight your code on mount
     hljs.initLineNumbersOnLoad();
-    window.scrollTo(0,0);
+    // window.scrollTo(0,0);
   },
   async created() {
     try {
@@ -188,6 +204,45 @@ code {
   transform: none;
   transform-origin: center;
 }
+
+.footer {
+  padding: 1rem 2rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-size: 0.9em;
+}
+
+.finish {
+  position: relative;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.finish::before,
+.finish::after {
+  content: '';
+  flex-grow: 1;
+  height: 1px;
+  background: rgb(94, 94, 94, 0.3);
+  margin: 0 10px;
+}
+
+.finish-word {
+  -webkit-tap-highlight-color: transparent;
+  font-family: "Liu Jian Mao Cao", cursive;
+  font-size: 18px;
+  line-height: 1.7;
+  color: rgb(89, 89, 89,);
+}
+
+.info{
+  text-align: left;
+  margin-top: 1em;
+}
+
 
 @media (max-width: 768px) {
   .BlogPostPage{
