@@ -212,7 +212,7 @@ code {
   font-size: 0.9em;
 }
 
-.finish {
+.footer .finish {
   position: relative;
   text-align: center;
   display: flex;
@@ -221,8 +221,8 @@ code {
   margin-bottom: 0.5rem;
 }
 
-.finish::before,
-.finish::after {
+.footer .finish::before,
+.footer .finish::after {
   content: '';
   flex-grow: 1;
   height: 1px;
@@ -235,10 +235,10 @@ code {
   font-family: "Liu Jian Mao Cao", cursive;
   font-size: 18px;
   line-height: 1.7;
-  color: rgb(89, 89, 89,);
+  color: rgb(89, 89, 89, 0.8);
 }
 
-.info{
+.footer .info{
   text-align: left;
   margin-top: 1em;
 }
