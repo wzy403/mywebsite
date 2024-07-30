@@ -60,7 +60,7 @@ export default {
   mounted() {
     hljs.highlightAll(); // highlight your code on mount
     hljs.initLineNumbersOnLoad();
-    // window.scrollTo(0,0);
+    window.scrollTo(0,0);
   },
   async created() {
     try {
