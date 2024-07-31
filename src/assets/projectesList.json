@@ -1,30 +1,38 @@
 [
   {
-    "id": 10000,
+    "id": 10001,
+    "name": "Personal-Website",
+    "url": "https://github.com/wzy403/mywebsite",
+    "languages": ["Vue", "JavaScript"],
+    "description": "My personal website"
+  },
+  {
+    "id": 10002,
     "name": "Cloud-System",
     "url": "https://github.com/wzy403/Cloud-System",
     "languages": ["PHP", "HTML"],
-    "description": "A Simple PHP cloud storage service website"
-  },
-  {
-    "id": 10001,
-    "name": "GPA-calculator",
-    "url": "https://github.com/wzy403/GPA-calculator",
-    "languages": ["Python"],
-    "description": "A Simple CGPA calculator"
+    "description": "This is an simple Cloud Storage Project"
   },
   {
     "id": 10003,
     "name": "UofT-Timetable-Builder",
     "url": "https://github.com/UofT-Box/UofT-Timetable-Builder",
-    "languages": ["Java", "JavaScript", "Python", "CSS", "HTML"],
-    "description": "A web-based course schedule generator for the University of Toronto"
+    "languages": ["Java", "JavaScript", "CSS", "HTML", "Python"],
+    "description": "The UofT Timetable Builder designed to simplify and optimize the creation of academic schedules for students."
   },
   {
     "id": 10004,
-    "name": "Personal-Website",
-    "url": "https://github.com/wzy403/mywebsite",
-    "languages": ["Java", "JavaScript", "Vue"],
-    "description": "My personal website"
+    "name": "Two-Player-Fighting-Game",
+    "url": "https://github.com/wzy403/Two-Player-Fighting-Game",
+    "languages": ["Java"],
+    "description": "This is a two-player fighting game developed using the Greenfoot platform."
+  },
+  
+  {
+    "id": 10005,
+    "name": "Online-Shop",
+    "url": "https://github.com/wzy403/Online-Shop",
+    "languages": ["JavaScript"],
+    "description": "A online shop project developed using Code.org platform"
   }
 ]
