@@ -9,7 +9,7 @@
       <h4>This website showcases my work, projects, blog posts, and more. Feel free to explore and learn more about me.</h4>
       <!-- <h3>A .</h3> -->
       <div class="signature">
-        <h4>正因为是废物，所以才要比任何人都认真的活着</h4>
+        <h4>正因为是废物，所以才要比任何人都努力的活着</h4>
       </div>
     </section>
 
