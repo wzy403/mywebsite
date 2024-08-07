@@ -55,7 +55,7 @@ export default {
   data() {
     return {
       name: "Zhengyu (Joey) Wang",
-      slogen: "正因为是废物，所以才要比任何人都要努力活着",
+      slogen: "正因为是废物，所以才要比任何人都努力的活着",
     };
   },
   methods: {
