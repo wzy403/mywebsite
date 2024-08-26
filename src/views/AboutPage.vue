@@ -299,6 +299,7 @@ export default {
   border-top-right-radius: 10px;
   display: flex;
   padding: 5px 10px;
+  align-items: center;
 }
 
 .terminal-title-btn {
