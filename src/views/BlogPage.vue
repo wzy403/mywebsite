@@ -140,7 +140,7 @@ export default {
   background-color: #fff;
   color: #000;
   margin: 0 auto;
-  width: 80%;
+  width: 75vw;
   min-height: 77vh;
   box-shadow: 0 0 20px #b9b1b1;
 }
@@ -190,15 +190,10 @@ export default {
 }
 @media (max-width: 431px) {
 
-  .blog-list {
+  /* .blog-list {
     padding: 15px;
     margin-left: 0;
-  }
-
-  .blog-post {
-    margin: 10px 0;
-    width: 100%;
-  }
+  } */
 
   .post-date {
     font-size: 0.8em;

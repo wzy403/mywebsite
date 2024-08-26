@@ -130,21 +130,24 @@ export default {
   height: 100%;
   padding-top: 2rem;
   padding-bottom: 2rem;
-  right: 1.1vh;
-  width: 80%;
+  /* right: 1.1vh; */
+  /* width: 80%; */
+  font-size: 18px;
+  margin: 0 auto;
+  width: 75vw;
 }
 .main{
-  position: relative;
+  /* position: relative; */
 
-  padding-left: 1rem;
-  padding-right: 3rem;
+  padding-left: 30px;
+  padding-right: 50px;
   margin-left: auto;
   margin-right: auto;
   
-  left: 10%;
+  /* left: 10%; */
   background-color: #fff;
-  width: 100%;
-  min-height: 100%;
+  /* width: 100%; */
+  /* min-height: 100%; */
   box-shadow: 0 0 20px #b9b1b1;
   overflow: auto;
 }
@@ -250,14 +253,14 @@ code {
     transform-origin: top center;
   }
 }
-
+/* 
 @media (max-width: 431px) {
   .BlogPostPage{
     transform: scale(0.9);
-    transform-origin: top left;
+    transform-origin: top center;
   }
   .main{
     left: 13%;
   }
-}
+} */
 </style>
