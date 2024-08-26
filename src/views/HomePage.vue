@@ -1,4 +1,3 @@
-<!-- src/views/Home.vue -->
 <template>
   <a href="http://www.github.com/wzy403" target="_blank" rel="noopener noreferrer">
     <img class="github" src="@/assets/img/github-mark-white.svg" alt="github" width="50" height="50" />

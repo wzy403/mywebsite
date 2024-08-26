@@ -1,0 +1,62 @@
+{
+  "intro": {
+    "Weclome": ["Welcome to my website!"],
+    "System": [
+      " Loading wzy403's personal profile...",
+      " Loading seccessful!",
+      " Thank you for visit, let me introduce myself."
+    ],
+    "Name": [" - Zhengyu (Joey) Wang"],
+    "School": [" - University of Toronto"],
+    "Program": [" - CS specialist + Stats Major + Math Minor"],
+    "Email": [" - zhengyu.wang@wzy403.com"],
+    "Done": [" ————— ~ Init seccessful ~ ——————"]
+  },
+  "connect": {
+    "Email": [": zhengyu.wang@wzy403.com"],
+    "GitHub": [": https://github.com/wzy403"],
+    "LinkedIn": [": https://linkedin.com/in/wzy403/"],
+    "WeChat/QQ": [": 2843474138"]
+  },
+  "skill": {
+    "A": [
+      " · Java: 90/100",
+      " · Python: 90/100",
+      " · Vue: 90/100",
+      " · JavaScript: 85/100",
+      " · SQL: 83/100",
+      " · C++: 80/100"
+    ],
+    "B": [" · HTML: 79/100", " · CSS: 79/100", "· PHP: 75/100", " · C: 70/100"],
+    "More Skill Stacking": [" · Git, Spring Boot, Qt, Electron, MySql, SQLite, Linux, Windows"]
+  },
+  "signature": {
+    "MySignature": ["正因为是废物，所以才要比任何人都努力的活着"]
+  },
+  "help": {
+    "connect": [" => Connect with me"],
+    "skill": [" => Shows my Skill Stacking"],
+    "intro": [" => Introduction of myself"],
+    "signature": [" => My Signature"],
+    "blog": [" => Read my blog"],
+    "projects": [" => Show my projects"],
+    "help": [" => Show this help message"],
+    "clear": [" => Clear the screen"],
+    "System": [
+      " Type \"exit\" to return to the main page."
+    ]
+  },
+  "ls": {
+    "connect": [" => Connect with me"],
+    "skill": [" => Shows my Skill Stacking"],
+    "intro": [" => Introduction of myself"],
+    "blog": [" => Read my blog"],
+    "projects": [" => Show my projects"],
+    "signature": [" => My Signature"],
+    "help": [" => Show this help message"],
+    "clear": [" => Clear the screen"],
+    "System": [
+      " Type \"exit\" to return to the main page."
+    ]
+  }
+}

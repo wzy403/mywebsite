@@ -1,4 +1,3 @@
-<!-- src/views/BlogPage.vue -->
 <template>
   <NavBarVue />
   <div class="blog-page">
