@@ -1,106 +1,432 @@
-<!-- src/views/Home.vue -->
 <template>
   <NavBarVue />
   <div class="about">
-    <h1>welcome!</h1>
-    <section class="welcome">
-      <h1>Hi 👋, I'm Zhengyu (Joey) Wang</h1>
-      <h2>A second-year CS specialist + STA major + MAT minor student at the University of Toronto.</h2>
-      <h4>This website showcases my work, projects, blog posts, and more. Feel free to explore and learn more about me.</h4>
-      <!-- <h3>A .</h3> -->
-      <div class="signature">
-        <h4>正因为是废物，所以才要比任何人都努力的活着</h4>
+    <div class="terminal" @click="focusCommandInput">
+      <div class="terminal-title">
+        <div class="terminal-title-btn red"></div>
+        <div class="terminal-title-btn yellow"></div>
+        <div class="terminal-title-btn green"></div>
+        <div class="terminal-title-text">About Me</div>
       </div>
-    </section>
-
-    <section class="connect">
-      <h3>Connect with Me</h3>
-      <p class="social-icons">
-        <a href="https://github.com/wzy403" target="blank"><img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/github.svg" alt="GitHub" height="30" width="40" style="filter: invert(0) brightness(0) contrast(1);"/></a>
-        <a href="https://twitter.com/woshiyingyan" target="blank"><img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/twitter.svg" alt="Twitter" height="30" width="40" /></a>
-        <a href="https://linkedin.com/in/wzy403" target="blank"><img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg" alt="LinkedIn" height="30" width="40" /></a>
-        <a href="https://instagram.com/xdwoshiyingyan" target="blank"><img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/instagram.svg" alt="Instagram" height="30" width="40" /></a>
-        <a href="https://www.leetcode.com/zhengyu-joey-wang" target="blank"><img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/leet-code.svg" alt="LeetCode" height="30" width="40" /></a>
-        <PopModal :visible="isModalVisible" :imageName="imageName" @close="isModalVisible = false"/>
-        <button class="QQ-button" @click="showModal()"><img src="@/assets/img/QQ.svg" alt="Wechat" height="30" width="40" /></button>
-      </p>
-    </section>
-
-
-    <section class="skills">
-      <h3>Languages and Tools</h3>
-      <p>
-        <a href="https://aws.amazon.com" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="AWS" width="40" height="40" /></a>
-        <a href="https://www.cprogramming.com/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/c/c-original.svg" alt="C" width="40" height="40" /></a>
-        <a href="https://www.w3schools.com/cpp/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/cplusplus/cplusplus-original.svg" alt="C++" width="40" height="40" /></a>
-        <a href="https://www.w3schools.com/css/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original-wordmark.svg" alt="CSS3" width="40" height="40" /></a>
-        <a href="https://git-scm.com/" target="_blank" rel="noreferrer"><img src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg" alt="Git" width="40" height="40" /></a>
-        <a href="https://www.w3.org/html/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original-wordmark.svg" alt="HTML5" width="40" height="40" /></a>
-        <a href="https://www.java.com" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg" alt="Java" width="40" height="40" /></a>
-        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="JavaScript" width="40" height="40" /></a>
-        <a href="https://www.linux.org/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/linux/linux-original.svg" alt="Linux" width="40" height="40" /></a>
-        <a href="https://www.mysql.com/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original-wordmark.svg" alt="MySQL" width="40" height="40" /></a>
-        <a href="https://www.php.net" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/php/php-original.svg" alt="PHP" width="40" height="40" /></a>
-        <a href="https://www.python.org" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" alt="Python" width="40" height="40" /></a>
-        <a href="https://spring.io/" target="_blank" rel="noreferrer"><img src="https://www.vectorlogo.zone/logos/springio/springio-icon.svg" alt="Spring" width="40" height="40" /></a>
-        <a href="https://www.sqlite.org/" target="_blank" rel="noreferrer"><img src="https://www.vectorlogo.zone/logos/sqlite/sqlite-icon.svg" alt="SQLite" width="40" height="40" /></a>
-        <a href="https://vuejs.org/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/vuejs/vuejs-original-wordmark.svg" alt="Vue.js" width="40" height="40" /></a>
-      </p>
-      <p>You can reach me at: <a href="mailto:zhengyu.wang@wzy403.com" style="color: white;">zhengyu.wang@wzy403.com</a></p>
-    </section>
+      <div class="terminal-content" ref="terminalContent">
+        <div
+          v-for="(line, index) in content"
+          :key="index"
+          class="terminal-content-text"
+        >
+          <span v-if="line.isCommand">➜ ~ </span>
+          <span v-if="line.needColor" :class="line.class">{{
+            line.colorText
+          }}</span>
+          <span>{{ line.text }}</span>
+        </div>
+        <div class="terminal-input">
+          <div class="terminal-input-text">
+            <span class="termain-pointer">➜ ~ </span>
+            <span class="command-display">{{ commandBeforeCursor }}</span>
+            <span class="cursor">&nbsp;&nbsp;</span>
+            <span class="command-display">{{ commandAfterCursor }}</span>
+            <input
+              ref="commandInput"
+              class="command-input"
+              type="text"
+              v-model="command"
+              @input="updateCursor"
+              @keyup="updateCursor"
+              @keypress.enter="processCommand"
+              v-show = this.isCommendInputDisplay
+            />
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script scoped>
-import NavBarVue from '@/components/NavBar.vue';
-import PopModal from "@/components/PopModal.vue"
+import NavBarVue from "@/components/NavBar.vue";
+import aboutCommand from "@/assets/aboutCommand.json";
 
 export default {
   name: "AboutPage",
   components: {
-    PopModal,
     NavBarVue,
   },
   data() {
     return {
-      isModalVisible: false,
-      imageName: 'QQ-QRCode.jpg' // 这里替换成你的图片URL
+      command: "",
+      cursorPos: 0,
+      content: [],
+      isCommendInputDisplay: false,
     };
   },
+  computed: {
+    commandBeforeCursor() {
+      return this.command.slice(0, this.cursorPos);
+    },
+    commandAfterCursor() {
+      return this.command.slice(this.cursorPos);
+    },
+  },
+  mounted() {
+    this.content = [];
+    this.animateContent("intro");
+  },
   methods: {
-    showModal() {
-      this.isModalVisible = true;
-    }
-  }
+    async animateContent(command) {
+      await this.displayLoadingDots();
+      await this.typeContent(command);
+
+      this.content.push({
+        needColor: true,
+        class: ["System", "color-span"],
+        colorText: "System",
+        text: ` Type "help" to get a supporting command list.`,
+      });
+      this.content.push({
+        needColor: true,
+        class: ["System", "color-span"],
+        colorText: "System",
+        text: ` Type "clear" to clear the terminal screen.`,
+      });
+      this.content.push({
+        needColor: true,
+        class: ["System", "color-span"],
+        colorText: "System",
+        text: ` Type "exit" to return to the main page.`,
+      });
+      this.isCommendInputDisplay = true;
+      this.$nextTick(() => {
+        this.focusCommandInput();
+      });
+    },
+
+    async displayLoadingDots() {
+      const loadingText = { text: "Loading", isCommand: false };
+      this.content.push(loadingText);
+      this.focusCommandInput();
+
+      for (let i = 0; i < 3; i++) {
+        await new Promise((resolve) => setTimeout(resolve, 300));
+        loadingText.text += ".";
+        this.$forceUpdate(); // 强制刷新视图
+      }
+
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      this.content.pop(); // 移除Loading...文字
+    },
+
+    async typeContent(inputCommand) {
+      if (aboutCommand[inputCommand]) {
+        for (let key in aboutCommand[inputCommand]) {
+          for (let line of aboutCommand[inputCommand][key]) {
+            await this.typeLine(line, inputCommand, key);
+          }
+        }
+      }
+      this.$nextTick(() => {
+        const terminalContent = this.$refs.terminalContent;
+        terminalContent.scrollTop = terminalContent.scrollHeight;
+      });
+    },
+
+    async typeLine(line, inputCommand, key) {
+      let obj = {};
+      if (key === "Weclome" || key === "MySignature") {
+        obj = { text: "" };
+      } else {
+        obj = {
+          needColor: true,
+          class: [inputCommand, key, "color-span"],
+          colorText: key,
+          text: "",
+        };
+      }
+      this.content.push(obj);
+      let currentText = "";
+      for (let char of line) {
+        currentText += char;
+        obj.text = currentText;
+        this.$forceUpdate(); // 强制刷新视图
+        await new Promise((resolve) => setTimeout(resolve, 10)); // 每个字符间隔时间
+      }
+      await new Promise((resolve) => setTimeout(resolve, 100)); // 每行之间间隔时间
+    },
+
+    focusCommandInput() {
+      this.$refs.commandInput.focus();
+    },
+
+    updateCursor() {
+      this.cursorPos = this.$refs.commandInput.selectionStart;
+      if (this.cursorPos < 0) {
+        this.cursorPos = 0;
+      }
+    },
+
+    processCommand() {
+      const inputCommand = this.command.trim().toLowerCase();
+      console.log(inputCommand);
+      this.content.push({ isCommand: true, text: inputCommand });
+      if (inputCommand === "clear") {
+        this.content = [];
+        this.command = "";
+        this.focusCommandInput();
+        return;
+      }
+
+      if (inputCommand === "exit") {
+        this.$router.push({ path: "/" });
+        return;
+      }
+
+      if (inputCommand === "blog"){
+        this.$router.push({ path: "/blog" });
+        return;
+      }
+
+      if(inputCommand === "project"){
+        // 我想通过新页打开我的项目地址
+        this.$router.push({ path: "/project" });
+        return;
+      }
+
+      if (aboutCommand[inputCommand]) {
+        for (let key in aboutCommand[inputCommand]) {
+          for (let line of aboutCommand[inputCommand][key]) {
+            if (key === "Weclome" || key === "MySignature") {
+              this.content.push({ text: line });
+              continue;
+            }
+
+            this.content.push({
+              needColor: true,
+              class: [inputCommand, key, "color-span"],
+              colorText: key,
+              text: line,
+            });
+          }
+        }
+      } else {
+        this.content.push({
+          needColor: true,
+          class: ["Error", "color-span"],
+          colorText: "Error",
+          text: ` command not found: ${inputCommand}`,
+        });
+        this.content.push({
+          needColor: true,
+          class: ["System", "color-span"],
+          colorText: "System",
+          text: ` Type "help" to get a supporting command list.`,
+        });
+      }
+
+      this.command = "";
+      this.focusCommandInput();
+
+      // 跳转至最底部
+      this.$nextTick(() => {
+        const terminalContent = this.$refs.terminalContent;
+        terminalContent.scrollTop = terminalContent.scrollHeight;
+      });
+    },
+
+    initTerminal(inputCommand) {
+      if (aboutCommand[inputCommand]) {
+        for (let key in aboutCommand[inputCommand]) {
+          for (let line of aboutCommand[inputCommand][key]) {
+            this.content.push({
+              needColor: true,
+              class: [inputCommand, key, "color-span"],
+              colorText: key,
+              text: line,
+            });
+          }
+        }
+      }
+
+      this.content.push({
+        needColor: true,
+        class: ["System", "color-span"],
+        colorText: "System",
+        text: ` Type "help" to get a supporting command list.`,
+      });
+      this.content.push({
+        needColor: true,
+        class: ["System", "color-span"],
+        colorText: "System",
+        text: ` Type "clear" to clear the terminal screen.`,
+      });
+      this.content.push({
+        needColor: true,
+        class: ["System", "color-span"],
+        colorText: "System",
+        text: ` Type "exit" to return to the main page.`,
+      });
+      this.$nextTick(() => {
+        const terminalContent = this.$refs.terminalContent;
+        terminalContent.scrollTop = terminalContent.scrollHeight;
+      });
+    },
+  },
 };
 </script>
 
 <style scoped>
-.about{
-  text-align: center;
+.about {
+  text-align: left;
   color: #ffff;
   display: flex;
+  font-weight: 800;
   flex-direction: column;
 }
 
-.welcome {
-  text-align: center;
-  margin-bottom: 20px;
+.terminal {
+  background-color: #000;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  margin: 20px auto;
+  margin-top: 3.5vh;
+  max-width: 900px;
+  padding-bottom: 20px;
+  width: 90%;
 }
-.signature {
-  background-color: #f0f0f098;
-  /* border-left: 4px solid #4CAF50; */
-  color: black;
-  padding: 1px 20px;
-  display: inline-block;
-  font-style: italic;
+
+.terminal-title {
+  background-color: #333;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  display: flex;
+  padding: 5px 10px;
+}
+
+.terminal-title-btn {
+  border-radius: 50%;
+  height: 15px;
+  width: 15px;
+  margin-left: 5px;
+}
+
+.terminal-title-text {
+  font-family: sans-serif;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: bold;
+  margin-left: 38%;
+}
+
+.terminal-content {
+  height: 75vh;
+  overflow-y: auto;
+  padding: 20px;
+}
+.terminal-content::-webkit-scrollbar {
+  display: none;
+}
+
+.terminal-content-text {
+  color: #fff;
   font-size: 16px;
-  margin-top: 10px;
-  border-radius: 100px;
+  line-height: 2.5;
 }
-.QQ-button{
-  border: none;
-  background: none;
-  cursor: pointer;
+.terminal-content-text .color-span {
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-bottom: 3px;
+}
+.terminal-content-text .Name,
+.terminal-content-text .School,
+.terminal-content-text .Program,
+.terminal-content-text .Email,
+.terminal-content-text .connect {
+  background-color: rgb(41, 128, 185);
+}
+.terminal-content-text .help,
+.terminal-content-text .ls,
+.terminal-content-text .A,
+.terminal-content-text .Done {
+  background-color: rgb(39, 174, 96);
+}
+.terminal-content-text .System {
+  background-color: rgb(153, 153, 153);
+}
+.terminal-content-text .B {
+  background-color: rgb(243, 156, 18);
+}
+.terminal-content-text .Stacking,
+.terminal-content-text .Error {
+  background-color: rgb(192, 57, 43);
+}
+
+.terminal-input {
+  /* background-color: #333; */
+  /* border-bottom-left-radius: 10px; */
+  /* border-bottom-right-radius: 10px; */
+  /* padding: 5px 10px; */
+  padding-top: 10px;
+  font-weight: 400;
+  word-break: break-all;
+}
+
+.cursor {
+  background-color: #fff;
+  color: #000;
+  line-height: 1.5;
+  animation: flash 1s infinite;
+}
+
+.terminal-input-text {
+  color: #fff;
+  font-weight: 800;
+  font-size: 16px;
+}
+
+.termain-pointer {
+  word-break: break-all;
+  font-weight: 800;
+  color: rgb(155, 247, 134);
+}
+
+.command-input {
+  width: 0px;
+  cursor: default;
+  opacity: 0;
+}
+
+.red {
+  background-color: #ff5f56;
+}
+
+.yellow {
+  background-color: #ffbd2e;
+}
+
+.green {
+  background-color: #27c93f;
+}
+
+@keyframes flash {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .terminal {
+    width: 80%;
+  }
+}
+
+@media (max-width: 430px) {
+  .terminal-content-text {
+    font-size: 12px;
+  }
 }
 </style>
