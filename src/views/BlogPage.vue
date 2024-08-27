@@ -188,12 +188,25 @@ export default {
     font-size: 0.9em;
   }
 }
+
 @media (max-width: 431px) {
 
   /* .blog-list {
     padding: 15px;
     margin-left: 0;
   } */
+  
+  .blog-container{
+    width: 100%;
+  }
+
+  .blog-post {
+    flex-direction: column;
+
+  }
+  .blog-link{
+    width: 90%;
+  }
 
   .post-date {
     font-size: 0.8em;

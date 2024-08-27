@@ -134,7 +134,8 @@ export default {
   /* width: 80%; */
   font-size: 18px;
   margin: 0 auto;
-  width: 75vw;
+  /* width: 75vw; */
+  width: 80vw;
 }
 .main{
   /* position: relative; */
@@ -176,8 +177,8 @@ export default {
 }
 .content code {
   font-family: "Consolas", "Fira Code", monospace;
-  white-space: pre-wrap;
-  word-break: break-word;
+  /* white-space: pre-wrap;
+  word-break: break-word; */
   overflow-x: auto;
 }
 blockquote {
@@ -189,10 +190,10 @@ blockquote {
 
 code {
   font-size: 0.85em;
-  font-family: Consolas, "Bitstream Vera Sans Mono", "Courier New", Courier,
+  font-family: "Consolas", "Bitstream Vera Sans Mono", "Courier New", Courier,
     monospace;
   line-height: 1.2em;
-  word-break: normal;
+  /* word-break: normal; */
   background: rgb(242, 239, 230);
   padding: 0.2em 0.3em;
   border-radius: 5px;
@@ -253,14 +254,17 @@ code {
     transform-origin: top center;
   }
 }
-/* 
+
 @media (max-width: 431px) {
   .BlogPostPage{
-    transform: scale(0.9);
-    transform-origin: top center;
+    /* transform: scale(0.9);
+    transform-origin: top center; */
+    width: 111vw;
+    right: 5.5vw;
   }
   .main{
-    left: 13%;
+    padding-left: 10px;
+    padding-right: 20px;
   }
-} */
+}
 </style>
