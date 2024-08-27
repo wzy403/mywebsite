@@ -20,28 +20,34 @@ export default {
 <style scoped>
 .NavBar {
   display: flex;
-  /* justify-content: center; */
+  justify-content: center;
   align-items: baseline;
   font-size: 25px;
 }
 
 .NavBar .router-tag {
-  margin: 0 15px; /* 设置链接之间的间距 */
-  text-decoration: none; /* 去掉下划线 */
-  color: rgb(180, 180, 180); /* 设置链接颜色 */
-  position: relative; /* 使伪元素相对于链接定位 */
+  margin: 0 15px;
+  text-decoration: none;
+  color: rgb(180, 180, 180); 
+  position: relative;
 }
 
 .NavBar .router-tag:not(:last-child)::after {
-  content: "|"; /* 分隔符内容 */
+  content: "|"; 
   position: absolute;
   align-content: center;
-  right: -20px; /* 调整分隔符位置 */
-  color: gray; /* 分隔符颜色 */
+  right: -20px; 
+  color: gray; 
 }
 
 body {
-  margin: 0; /* 去掉默认的边距 */
-  font-family: Arial, sans-serif; /* 设置字体 */
+  margin: 0;
+  font-family: Arial, sans-serif; 
+}
+
+@media (max-width: 431px) {
+  .NavBar {
+    transform: scale(0.8);
+  }
 }
 </style>

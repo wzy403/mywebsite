@@ -423,9 +423,22 @@ export default {
   .terminal {
     width: 80%;
   }
+
+  .terminal-title-text {
+    margin-left: 34%;
+  }
 }
 
-@media (max-width: 430px) {
+@media (max-width: 431px) {
+
+  .terminal {
+    width: 100%;
+  }
+
+  .terminal-title-text {
+    margin-left: 25%;
+  }
+
   .terminal-content-text {
     font-size: 12px;
   }
