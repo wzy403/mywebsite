@@ -5,7 +5,7 @@
     <div class="languages-div">
       <div v-for="language in project.languages" :key="language" class="language">
         <span :style="{ backgroundColor: languageColor(language) }" class="language-color"></span>
-        <span>{{ language }}</span>
+        <span class="language-text">{{ language }}</span>
       </div>
     </div>
     <a :href="project.url" target="_blank">View on GitHub</a>
@@ -68,11 +68,12 @@ export default {
 }
 
 .languages-div{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    margin: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin: 15px;
+  margin-left: 25px;
 }
 
 .language {
@@ -86,5 +87,9 @@ export default {
   height: 12px;
   border-radius: 50%;
   margin-right: 8px;
+}
+
+.language-text {
+  margin-right: 15px;
 }
 </style>
