@@ -32,7 +32,7 @@
 
 <script>
 import NavBarVue from "@/components/NavBar.vue";
-import { marked } from "marked";
+import MarkdownIt from "markdown-it";
 import hljs from "highlight.js";
 import "highlight.js/styles/rainbow.css";
 // import 'highlight.js/styles/obsidian.css';
@@ -58,7 +58,7 @@ export default {
     };
   },
   mounted() {
-    hljs.highlightAll(); // highlight your code on mount
+    hljs.highlightAll(); // highlight code on mount
     hljs.initLineNumbersOnLoad();
     window.scrollTo(0,0);
   },
@@ -66,7 +66,12 @@ export default {
     try {
       const postID = this.$route.params.id;
       const markdownContent = this.getPost(postID);
-      this.postContent = marked(markdownContent);
+      const md = new MarkdownIt({
+        html: true, // 启用 HTML 标签解析
+        linkify: true, // 自动识别 URL 并转换为链接
+        typographer: true // 启用智能排版
+      });
+      this.postContent = md.render(markdownContent);
     } catch (error) {
       // console.error("Failed to load post:", error);
       this.$router.push(`/notfound`);
@@ -171,14 +176,17 @@ export default {
   text-align: center;
   color: #ccc;
   border-right: 1px solid #999;
-  vertical-align: top;
+  /* vertical-align: top; */
   padding-right: 5px;
   word-break: normal;
 }
 .content code {
-  font-family: "Consolas", "Fira Code", monospace;
-  /* white-space: pre-wrap;
-  word-break: break-word; */
+  font-size: 0.85em;
+  font-family: "Consolas", monospace;
+  line-height: 1.2em;
+  /* word-break: normal; */
+  padding: 0.2em 0.3em;
+  border-radius: 5px;
   overflow-x: auto;
 }
 blockquote {
@@ -188,12 +196,14 @@ blockquote {
   margin: 20px 0px;
 }
 
-code {
+p code {
   font-size: 0.85em;
   font-family: "Consolas", "Bitstream Vera Sans Mono", "Courier New", Courier,
     monospace;
   line-height: 1.2em;
-  /* word-break: normal; */
+  white-space: normal;
+  /* word-break: break-all; */
+  overflow-wrap: break-word;
   background: rgb(242, 239, 230);
   padding: 0.2em 0.3em;
   border-radius: 5px;
@@ -246,7 +256,6 @@ code {
   text-align: left;
   margin-top: 1em;
 }
-
 
 @media (max-width: 768px) {
   .BlogPostPage{
