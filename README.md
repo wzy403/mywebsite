@@ -4,7 +4,7 @@
 
 ## Overview
 
-This is a personal website project built using Vue 3. It features a blog section where content is written in Markdown. The entire project has been developed solely by me.
+This is a personal website project built using Vue 3. It features a blog section where content is written in Markdown.
 
 ## Features
 
