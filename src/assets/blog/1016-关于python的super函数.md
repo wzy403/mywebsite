@@ -1,5 +1,5 @@
 ---
-id: 1015
+id: 1016
 title: 为什么我讨厌Python：从super函数谈起
 date: 2024-07-16
 tags: 
