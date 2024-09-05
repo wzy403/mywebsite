@@ -268,6 +268,7 @@ p code {
   .BlogPostPage{
     /* transform: scale(0.9);
     transform-origin: top center; */
+    height: 100vh;
     width: 111vw;
     right: 5.5vw;
   }
