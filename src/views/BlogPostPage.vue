@@ -60,6 +60,12 @@ export default {
   mounted() {
     hljs.highlightAll(); // highlight code on mount
     hljs.initLineNumbersOnLoad();
+    // hljs.initHighlightingOnLoad();
+    var blocks = document.querySelectorAll('pre');
+    Array.prototype.forEach.call(blocks, function(block) {
+      var language = block.querySelector('code.hljs').result.language;
+      block.insertAdjacentHTML("afterbegin",`<label class="code-language-tag">${language}</label>`)
+    });
     window.scrollTo(0,0);
   },
   async created() {
@@ -186,9 +192,21 @@ export default {
   line-height: 1.2em;
   /* word-break: normal; */
   padding: 0.2em 0.3em;
-  border-radius: 5px;
+  border-radius: 0 5px 5px 5px;
   overflow-x: auto;
 }
+
+pre .code-language-tag{
+  position: relative;
+  top: 0;
+  left: 0;
+  padding: 0.1em 0.5em;
+  background: #474949;
+  color: #fff;
+  border-radius: 5px 5px 0 0;
+  font-size: 0.9em;
+}
+
 blockquote {
   background: rgb(249, 249, 249);
   border-left: 5px solid rgb(204, 204, 204);
