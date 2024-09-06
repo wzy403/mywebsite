@@ -34,5 +34,12 @@
     "url": "https://github.com/wzy403/Online-Shop",
     "languages": ["JavaScript"],
     "description": "A online shop project developed using Code.org platform"
+  },
+  {
+    "id": 10006,
+    "name": "Academia-Imperial",
+    "url": "https://github.com/zzz403/CSC207-campus-forum",
+    "languages": ["Java"],
+    "description": "Academia Imperial is a comprehensive platform designed for students and faculty to engage in discussions, share resources, and post announcements."
   }
 ]
