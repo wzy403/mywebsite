@@ -39,10 +39,10 @@
         <img src="@/assets/img/about.svg" alt="about" width="50" height="50" />
         <div><span>About</span></div>
       </div>
-      <!-- <div class="cv" @click="showPage('about')">
+      <div class="cv" @click="showPage('cv')">
         <img src="@/assets/img/cv.svg" alt="cv" width="50" height="50" />
         <div><span class="cvspan">CV</span></div>
-      </div> -->
+      </div>
     </div>
   </div>
 </template>
@@ -59,6 +59,10 @@ export default {
   },
   methods: {
     showPage(pagename) {
+      if(pagename === "cv"){
+        window.open("/Zhengyu_Wang_Resume.pdf", "_blank");
+        return;
+      }
       this.$router.push({ path: `/${pagename}` });
     },
   },
