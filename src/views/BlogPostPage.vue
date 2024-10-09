@@ -191,9 +191,11 @@ pre .code-language-tag{
   position: relative;
   top: 0;
   left: 0;
-  padding: 0.1em 0.5em;
+  /* padding: 0.1em 0.5em; */
+  padding: 3px 8px;
   background: #474949;
   color: #fff;
+  /* border: 2px solid #474949; */
   border-radius: 5px 5px 0 0;
   font-size: 0.9em;
 }
