@@ -11,37 +11,36 @@ const routes = [
     path: '/',
     name: 'Home',
     component: HomePage,
-    meta: {title: 'Zhengyu Wang'}
+    meta: {title: 'Zhengyu Wang | Code, Design, and Life'}
   },
   {
     path: '/project',
     name: 'ProjectPage',
     component: ProjectPage,
-    meta: {title: 'Zhengyu Wang'}
+    meta: {title: 'Projects (创意之作) | Zhengyu Wang'}
   },
   {
     path: '/blog',
     name: 'BlogPage',
     component: BlogPage,
-    meta: {title: 'Zhengyu Wang'}
+    meta: {title: 'Blog (笔耕不辍) | Zhengyu Wang'}
   },
   {
     path: '/blog/:id',
     name: 'BlogPost',
-    component: BlogPostPage,
-    meta: {title: 'Zhengyu Wang'}
+    component: BlogPostPage
   },
   {
     path: '/about',
     name: 'AboutPage',
     component: AboutPage,
-    meta: {title: 'Zhengyu Wang'}
+    meta: {title: 'Hello, I\'m Zhengyu'}
   },
   {
     path: '/:catchAll(.*)',
     name: 'notfound',
     component: NotFound,
-    meta: {title: 'Zhengyu Wang'}
+    meta: {title: 'How did you get here?'}
   }
 ];
 

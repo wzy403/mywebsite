@@ -103,7 +103,7 @@ export default {
           this.post.title = fileInfo[2];
           this.post.date = fileInfo[3];
           let content = fileInfo[5];
-          
+          document.title = `${this.post.title} - Zhengyu Wang's Blog`;
           const imgRegex = /!\[([^\]]+)\]\(([^)]+)\)/g;
           if(!imgRegex.test(content)){
             return content;
@@ -186,15 +186,6 @@ export default {
   padding-right: 5px;
   word-break: normal;
 }
-.content code {
-  font-size: 0.85em;
-  font-family: "Consolas", monospace;
-  line-height: 1.2em;
-  /* word-break: normal; */
-  padding: 0.2em 0.3em;
-  border-radius: 0 5px 5px 5px;
-  overflow-x: auto;
-}
 
 pre .code-language-tag{
   position: relative;
@@ -214,18 +205,28 @@ blockquote {
   margin: 20px 0px;
 }
 
-p code {
+code {
   font-size: 0.85em;
   font-family: "Consolas", "Bitstream Vera Sans Mono", "Courier New", Courier,
     monospace;
   line-height: 1.2em;
-  white-space: normal;
+  /* white-space: normal; */
   /* word-break: break-all; */
   overflow-wrap: break-word;
   background: rgb(242, 239, 230);
   padding: 0.2em 0.3em;
   border-radius: 5px;
   color: rgb(245, 81, 81);
+}
+
+.content code {
+  font-size: 0.85em;
+  font-family: "Consolas", monospace;
+  line-height: 1.2em;
+  /* word-break: normal; */
+  padding: 0.2em 0.3em;
+  border-radius: 0 5px 5px 5px;
+  overflow-x: auto;
 }
 
 .content img {
