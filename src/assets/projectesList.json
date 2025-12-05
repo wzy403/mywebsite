@@ -8,10 +8,10 @@
   },
   {
     "id": 10002,
-    "name": "Cloud-System",
-    "url": "https://github.com/wzy403/Cloud-System",
-    "languages": ["PHP", "HTML"],
-    "description": "This is an simple Cloud Storage Project"
+    "name": "BiliSmartSkip",
+    "url": "https://github.com/wzy403/BiliSmartSkip",
+    "languages": ["JavaScript", "HTML"],
+    "description": "A lightweight Chrome extension that identifies and skips embedded ad segments in BiliBili videos by analyzing user-submitted danmaku."
   },
   {
     "id": 10003,
@@ -22,18 +22,17 @@
   },
   {
     "id": 10004,
+    "name": "Cloud-System",
+    "url": "https://github.com/wzy403/Cloud-System",
+    "languages": ["PHP", "HTML"],
+    "description": "This is an simple Cloud Storage Project"
+  }, 
+  {
+    "id": 10005,
     "name": "Two-Player-Fighting-Game",
     "url": "https://github.com/wzy403/Two-Player-Fighting-Game",
     "languages": ["Java"],
     "description": "This is a two-player fighting game developed using the Greenfoot platform."
-  },
-  
-  {
-    "id": 10005,
-    "name": "Online-Shop",
-    "url": "https://github.com/wzy403/Online-Shop",
-    "languages": ["JavaScript"],
-    "description": "A online shop project developed using Code.org platform"
   },
   {
     "id": 10006,
@@ -41,5 +40,12 @@
     "url": "https://github.com/zzz403/CSC207-campus-forum",
     "languages": ["Java"],
     "description": "Academia Imperial is a comprehensive platform designed for students and faculty to engage in discussions, share resources, and post announcements."
+  },
+  {
+    "id": 10007,
+    "name": "Online-Shop",
+    "url": "https://github.com/wzy403/Online-Shop",
+    "languages": ["JavaScript"],
+    "description": "A online shop project developed using Code.org platform"
   }
 ]
