@@ -1,6 +1,6 @@
 ---
 id: 1016
-title: 关于python的super函数
+title: 关于Python的super函数
 date: 2024-07-16
 tags: 
 - 技术
