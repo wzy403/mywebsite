@@ -54,7 +54,7 @@ export default {
         date: "",
       },
       postContent: "",
-      copyRightYear: 2025,
+      copyRightYear: 2026,
     };
   },
   mounted() {
