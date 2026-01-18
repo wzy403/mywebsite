@@ -1,0 +1,159 @@
+// ============================================
+// 日式/和风风格 CSS变量定义
+// "春晓/Haru" (浅色) & "夜桜/Yozakura" (深色)
+// ============================================
+
+:root {
+  // ========== 浅色主题 "春晓/Haru" ==========
+
+  // 背景色
+  --bg-primary: #FAF8F5;      // 和纸白 (Washi White)
+  --bg-secondary: #F5F2ED;    // 象牙白 (Ivory)
+  --bg-tertiary: #EDE8E0;     // 米色 (Cream)
+
+  // 文字色
+  --text-primary: #2C2825;    // 墨黑 (Sumi Black)
+  --text-secondary: #5C5650;  // 灰褐 (Taupe)
+  --text-tertiary: #8C8680;   // 浅灰 (Stone)
+
+  // 强调色
+  --accent-primary: #C4A77D;    // 琥珀色 (Kohaku)
+  --accent-secondary: #D4A5A5;  // 樱花粉 (Sakura)
+  --accent-tertiary: #7EB5A6;   // 青竹色 (Aotake)
+
+  // 功能色
+  --link-color: #6B8E8D;        // 青磁色 (Seiji)
+  --border-color: #E0DCD5;      // 淡墨 (Light Ink)
+
+  // 阴影
+  --shadow-color: rgba(44, 40, 37, 0.08);
+  --shadow-sm: 0 1px 2px rgba(44, 40, 37, 0.05);
+  --shadow-md: 0 4px 6px rgba(44, 40, 37, 0.07);
+  --shadow-lg: 0 10px 15px rgba(44, 40, 37, 0.1);
+  --shadow-xl: 0 20px 25px rgba(44, 40, 37, 0.1);
+
+  // 终端配色
+  --terminal-bg: #2A2725;
+  --terminal-text: #E8E4DF;
+  --terminal-prompt: #B4D4B0;
+
+  // 终端标签色
+  --tag-name: #7EB5A6;
+  --tag-school: #D4A5A5;
+  --tag-skill-a: #B4D4B0;
+  --tag-skill-b: #E8C88C;
+  --tag-system: #9C9890;
+  --tag-error: #D4A5A5;
+
+  // ========== 字体 ==========
+  --font-sans: 'Noto Sans JP', 'Noto Sans SC', -apple-system,
+               BlinkMacSystemFont, 'Segoe UI', 'PingFang SC',
+               'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  --font-serif: 'Noto Serif JP', 'Noto Serif SC', Georgia,
+                'Times New Roman', serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Source Code Pro',
+               Consolas, 'Courier New', monospace;
+  --font-cursive: 'Ma Shan Zheng', 'Liu Jian Mao Cao', cursive;
+
+  // ========== 字体大小 ==========
+  --text-xs: 12px;
+  --text-sm: 14px;
+  --text-base: 16px;
+  --text-lg: 18px;
+  --text-xl: 20px;
+  --text-2xl: 24px;
+  --text-3xl: 30px;
+  --text-4xl: 36px;
+
+  // 行高
+  --leading-tight: 1.25;
+  --leading-snug: 1.375;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+  --leading-loose: 2;
+
+  // ========== 间距 (基于8px网格) ==========
+  --spacing-1: 4px;
+  --spacing-2: 8px;
+  --spacing-3: 12px;
+  --spacing-4: 16px;
+  --spacing-5: 20px;
+  --spacing-6: 24px;
+  --spacing-8: 32px;
+  --spacing-10: 40px;
+  --spacing-12: 48px;
+  --spacing-16: 64px;
+  --spacing-20: 80px;
+  --spacing-24: 96px;
+
+  // ========== 圆角 ==========
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 24px;
+  --radius-full: 9999px;
+
+  // ========== 容器宽度 ==========
+  --container-sm: 640px;
+  --container-md: 768px;
+  --container-lg: 1024px;
+  --container-xl: 1280px;
+  --container-prose: 750px;
+
+  // ========== 过渡 ==========
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+  --transition-slower: 0.6s ease;
+
+  // ========== Z-index ==========
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-fixed: 300;
+  --z-modal-backdrop: 400;
+  --z-modal: 500;
+  --z-tooltip: 600;
+}
+
+// ========== 深色主题 "夜桜/Yozakura" ==========
+[data-theme="dark"] {
+  // 背景色
+  --bg-primary: #1A1917;      // 漆黒 (Shikkoku)
+  --bg-secondary: #242220;    // 墨色 (Sumi-iro)
+  --bg-tertiary: #2E2B28;     // 焦茶 (Kogecha)
+
+  // 文字色
+  --text-primary: #E8E4DF;    // 生成色 (Kinari)
+  --text-secondary: #B8B2A8;  // 灰白 (Hai-shiro)
+  --text-tertiary: #807A70;   // 鼠色 (Nezumi)
+
+  // 强调色
+  --accent-primary: #D4B896;    // 金茶 (Kincha)
+  --accent-secondary: #E8B4B4;  // 淡桜 (Usuzakura)
+  --accent-tertiary: #8ECAB8;   // 若竹 (Wakatake)
+
+  // 功能色
+  --link-color: #9BC5C4;        // 水浅葱 (Mizuasagi)
+  --border-color: #3A3735;      // 黒橡 (Kurotsurubami)
+
+  // 阴影
+  --shadow-color: rgba(0, 0, 0, 0.3);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.25);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.3);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.35);
+
+  // 终端配色
+  --terminal-bg: #1A1917;
+  --terminal-text: #E8E4DF;
+  --terminal-prompt: #C8E8C4;
+
+  // 终端标签色
+  --tag-name: #8ECAB8;
+  --tag-school: #E8B4B4;
+  --tag-skill-a: #C8E8C4;
+  --tag-skill-b: #F0D090;
+  --tag-system: #9C9890;
+  --tag-error: #E8B4B4;
+}

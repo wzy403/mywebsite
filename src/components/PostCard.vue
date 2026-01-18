@@ -1,92 +1,134 @@
 <template>
-  <div class="PostCard">
+  <div class="post-card" @click="navigateToPost">
+    <span class="post-date">{{ formatDate(post.date) }}</span>
     <h3 class="post-title">{{ post.title }}</h3>
-    <!-- <div class="post-date">{{ formatDate(post.date) }}</div> -->
-    <!-- <p>{{ post.excerpt }}</p> -->
+    <span class="post-arrow">→</span>
   </div>
 </template>
 
 <script>
+import { useRouter } from 'vue-router';
+
 export default {
   name: "PostCard",
   props: {
     post: {
-        type: JSON,
-        default: []
+      type: Object,
+      default: () => ({})
     },
   },
-  setup() {
-    return {};
-  },
-  methods: {
-    formatDate(date) {
-      const options = { year: "numeric", month: "short", day: "numeric" };
-      return new Date(date).toLocaleDateString("en-US", options);
-    },
-  },
+  setup(props) {
+    const router = useRouter();
+
+    const navigateToPost = () => {
+      router.push(`/blog/${props.post.id}`);
+    };
+
+    const formatDate = (date) => {
+      if (!date) return '';
+      const d = new Date(date);
+      const month = d.toLocaleDateString('en-US', { month: 'short' });
+      const day = d.getDate();
+      return `${month} ${day}`;
+    };
+
+    return {
+      navigateToPost,
+      formatDate
+    };
+  }
 };
 </script>
 
 <style scoped>
-.PostCard {
-  color: #000;
-  text-decoration: none;
-  flex: 5 1 0%;
-  min-width: 0;
-  margin: 10px;
-  padding-right: 2em;
-  background: linear-gradient(rgb(244, 244, 244), rgb(246, 246, 246));
-  text-transform: capitalize;
-  line-height: 1.2;
-  font-weight: bold;
-  transition: transform 0.3s ease;
+.post-card {
+  display: flex;
+  align-items: center;
+  padding: var(--spacing-4) var(--spacing-5);
+  margin: var(--spacing-2) 0;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.PostCard:hover {
-  cursor: pointer;
-  transform: scale(1.01);
+.post-card:hover {
+  background: var(--bg-tertiary);
+  transform: translateX(8px);
+}
+
+.post-card:hover .post-title {
+  color: var(--accent-primary);
+}
+
+.post-card:hover .post-arrow {
+  opacity: 1;
+  transform: translateX(4px);
+}
+
+.post-date {
+  flex-shrink: 0;
+  width: 60px;
+  font-size: var(--text-sm);
+  color: var(--text-tertiary);
+  font-family: var(--font-mono);
 }
 
 .post-title {
-  display: block;
-  color: inherit;
-  text-decoration: none;
+  flex: 1;
+  margin: 0;
+  font-size: var(--text-base);
+  font-weight: 500;
+  color: var(--text-primary);
+  transition: color var(--transition-fast);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  padding-left: 15px;
-  height: 100%;
-  width: 100%;
-  font-size: large;
 }
 
+.post-arrow {
+  flex-shrink: 0;
+  margin-left: var(--spacing-3);
+  color: var(--text-tertiary);
+  opacity: 0;
+  transition: all var(--transition-fast);
+}
+
+/* 响应式 */
 @media (max-width: 768px) {
-  .PostCard {
-    margin: 5px;
-    padding: 10px;
-    padding-right: 2em;
-    font-size: 0.9em;
+  .post-card {
+    padding: var(--spacing-3) var(--spacing-4);
+  }
+
+  .post-date {
+    width: 50px;
+    font-size: var(--text-xs);
   }
 
   .post-title {
-    font-size: medium;
-    white-space: normal;
-    word-wrap: break-word;
+    font-size: var(--text-sm);
   }
 }
 
-@media (max-width: 430px) {
-  .PostCard {
-    margin: 0;
-    padding: 0;
-    padding-right: 2em;
-    font-size: 0.9em;
+@media (max-width: 480px) {
+  .post-card {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: var(--spacing-3);
+  }
+
+  .post-date {
+    width: auto;
+    margin-bottom: var(--spacing-1);
   }
 
   .post-title {
-    font-size: medium;
     white-space: normal;
-    word-wrap: break-word;
+    line-height: var(--leading-snug);
+  }
+
+  .post-arrow {
+    display: none;
   }
 }
 </style>

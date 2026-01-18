@@ -1,74 +1,101 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="zh-CN">
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap"
-      rel="stylesheet"
-    />
-    <link href="https://fonts.googleapis.com/css2?family=Liu+Jian+Mao+Cao&display=swap" rel="stylesheet">
-    <script src="js/hovertreewelcome.js"></script>
-    <script src="js/bg_window.js"></script>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover" />
+    <meta name="theme-color" content="#FAF8F5" />
+    <meta name="description" content="Zhengyu Wang's personal website - Code, Design, and Life" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+JP:wght@400;700&family=JetBrains+Mono:wght@400;500&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+
     <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
     <title><%= htmlWebpackPlugin.options.title %></title>
-    <title>
-      welcome to my website
-    </title>
+
     <style>
-      canvas {
+      /* 初始加载样式 - 防止闪烁 */
+      :root {
+        --bg-primary: #FAF8F5;
+        --text-primary: #2C2825;
+      }
+
+      [data-theme="dark"] {
+        --bg-primary: #1A1917;
+        --text-primary: #E8E4DF;
+      }
+
+      html, body {
+        margin: 0;
+        padding: 0;
+        background-color: var(--bg-primary);
+        color: var(--text-primary);
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+
+      /* 滚动条基础样式 */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: rgba(140, 134, 128, 0.5);
+        border-radius: 9999px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgba(140, 134, 128, 0.7);
+      }
+
+      /* 初始加载占位 */
+      #app-loading {
         position: fixed;
         top: 0;
         left: 0;
-        z-index: -2;
-      }
-      body {
-        background-color: #242424;
-        margin: 0;
-        padding: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--bg-primary);
+        z-index: 9999;
+        transition: opacity 0.3s ease;
       }
 
-      /* 设置浏览器滚动条样式 */
-      /* 浏览器滚动条样式 */
-      /* width */
-      ::-webkit-scrollbar {
-        /* width: 3px;
-        height: 3px; */
-        width: 6px;
-        height: 6px;
-      }
-      /* Track */
-      ::-webkit-scrollbar-track {
-        background: #242424;
-        /* background: #fff; */
-        border-radius: 8px;
-      }
-      /* Handle */
-      ::-webkit-scrollbar-thumb {
-        background: rgba(201, 201, 202, 0.5);
-        border-radius: 8px;
-      }
-      /* Handle on hover */
-      ::-webkit-scrollbar-thumb:hover {
-        /* background: rgb(162, 162, 163); */
-        background: rgba(201, 201, 202, 0.5);
-        border-radius: 8px;
+      #app-loading.fade-out {
+        opacity: 0;
+        pointer-events: none;
       }
     </style>
+
+    <!-- 主题初始化脚本 - 防止闪烁 -->
+    <script>
+      (function() {
+        const stored = localStorage.getItem('theme');
+        if (stored) {
+          document.documentElement.setAttribute('data-theme', stored);
+        } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      })();
+    </script>
   </head>
   <body>
     <noscript>
-      <strong
-        >We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work
-        properly without JavaScript enabled. Please enable it to
-        continue.</strong
-      >
+      <strong>
+        We're sorry but this website doesn't work properly without JavaScript enabled.
+        Please enable it to continue.
+      </strong>
     </noscript>
 
     <div id="app"></div>
-
-    <canvas id="canvas" width="100%" height="100%"></canvas>
 
     <!-- built files will be auto injected -->
   </body>

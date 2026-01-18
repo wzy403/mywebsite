@@ -1,0 +1,162 @@
+// ============================================
+// 基础样式重置
+// ============================================
+
+@import './variables.scss';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  transition: background-color var(--transition-normal),
+              color var(--transition-normal);
+  min-height: 100vh;
+}
+
+// ========== 链接 ==========
+a {
+  color: var(--link-color);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+
+  &:hover {
+    color: var(--accent-primary);
+  }
+}
+
+// ========== 图片 ==========
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+// ========== 按钮重置 ==========
+button {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+// ========== 列表重置 ==========
+ul, ol {
+  list-style: none;
+}
+
+// ========== 滚动条样式 ==========
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--text-tertiary);
+  border-radius: var(--radius-full);
+
+  &:hover {
+    background: var(--text-secondary);
+  }
+}
+
+// Firefox滚动条
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--text-tertiary) var(--bg-secondary);
+}
+
+// ========== Selection样式 ==========
+::selection {
+  background: var(--accent-secondary);
+  color: var(--text-primary);
+}
+
+// ========== 容器 ==========
+.container {
+  width: 100%;
+  max-width: var(--container-lg);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--spacing-4);
+  padding-right: var(--spacing-4);
+}
+
+.container-prose {
+  max-width: var(--container-prose);
+}
+
+// ========== 视觉隐藏 (无障碍) ==========
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// ========== 和纸质感背景 ==========
+.washi-texture {
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    opacity: 0.03;
+    pointer-events: none;
+    z-index: 0;
+  }
+}
+
+// ========== 毛玻璃效果 ==========
+.glass {
+  background: rgba(var(--bg-primary), 0.85);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+// ========== 卡片基础样式 ==========
+.card {
+  background: var(--bg-secondary);
+  border-radius: var(--radius-lg);
+  transition: transform var(--transition-normal),
+              box-shadow var(--transition-normal);
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}

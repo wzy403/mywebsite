@@ -1,51 +1,42 @@
 <template>
-  <div>
-    <NavBarVue />
-    <div class="BlogPostPage">
-      <div class="main">
-        <div class="title-bar">
-          <h1 class="title">{{ post.title }}</h1>
-          <span class="title">{{ formatDate(post.date) }}</span>
-        </div>
+  <div class="blog-post-page">
+    <NavBar />
 
-        <div class="container">
-          <div class="content" v-html="postContent"></div>
-        </div>
+    <main class="post-main">
+      <article class="post-article">
+        <!-- 文章头部 -->
+        <header class="post-header">
+          <h1 class="post-title">{{ post.title }}</h1>
+          <div class="post-meta">
+            <time class="post-date">{{ formatDate(post.date) }}</time>
+          </div>
+        </header>
 
-        <div class="footer">
-          <div class="finish">
-            <span class="finish-word">完</span>
+        <!-- 文章内容 -->
+        <div class="post-content prose" v-html="postContent"></div>
+
+        <!-- 文章结尾 -->
+        <footer class="post-footer">
+          <div class="end-mark">完</div>
+          <div class="post-info">
+            <p class="author">Author: Zhengyu Wang</p>
+            <p class="copyright">Copyright © {{ copyRightYear }}</p>
           </div>
-          <div class="info">
-            <div class="author">
-              <span>Author: Zhengyu Wang</span>
-            </div>
-            <div class="copy-right">
-              <span>Copyright © {{ this.copyRightYear }}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+        </footer>
+      </article>
+    </main>
   </div>
 </template>
 
 <script>
-import NavBarVue from "@/components/NavBar.vue";
+import NavBar from "@/components/NavBar.vue";
 import MarkdownIt from "markdown-it";
 import hljs from "highlight.js";
-import "highlight.js/styles/rainbow.css";
-// import 'highlight.js/styles/obsidian.css';
-// import 'highlight.js/styles/gradient-dark.css';
-// import 'highlight.js/styles/gradient-light.css';
-// import 'highlight.js/styles/agate.css';
-window.hljs = hljs;
-require("highlightjs-line-numbers.js");
 
 export default {
   name: "BlogPostPage",
   components: {
-    NavBarVue,
+    NavBar,
   },
   data() {
     return {
@@ -58,32 +49,41 @@ export default {
     };
   },
   mounted() {
-    hljs.highlightAll(); // highlight code on mount
-    hljs.initLineNumbersOnLoad();
-    // hljs.initHighlightingOnLoad();
-    var blocks = document.querySelectorAll('pre');
-    Array.prototype.forEach.call(blocks, function(block) {
-      var language = block.querySelector('code.hljs').result.language;
-      block.insertAdjacentHTML("afterbegin",`<label class="code-language-tag">${language}</label>`)
+    this.$nextTick(() => {
+      this.highlightCode();
     });
-    window.scrollTo(0,0);
+    window.scrollTo(0, 0);
   },
   async created() {
     try {
       const postID = this.$route.params.id;
       const markdownContent = this.getPost(postID);
       const md = new MarkdownIt({
-        html: true, // 启用 HTML 标签解析
-        linkify: true, // 自动识别 URL 并转换为链接
-        typographer: true // 启用智能排版
+        html: true,
+        linkify: true,
+        typographer: true,
+        highlight: function (str, lang) {
+          if (lang && hljs.getLanguage(lang)) {
+            try {
+              return `<pre class="code-block"><div class="code-header"><span class="code-lang">${lang}</span></div><code class="hljs language-${lang}">${hljs.highlight(str, { language: lang }).value}</code></pre>`;
+            } catch (_e) {
+              // highlight failed, fallback to default
+            }
+          }
+          return `<pre class="code-block"><code class="hljs">${md.utils.escapeHtml(str)}</code></pre>`;
+        }
       });
       this.postContent = md.render(markdownContent);
     } catch (error) {
-      // console.error("Failed to load post:", error);
       this.$router.push(`/notfound`);
     }
   },
   methods: {
+    highlightCode() {
+      document.querySelectorAll('pre code.hljs').forEach((block) => {
+        hljs.highlightElement(block);
+      });
+    },
     getAllFileName() {
       const requireContext = require.context("@/assets/blog", false, /\.md$/);
       const fileNames = requireContext
@@ -97,37 +97,35 @@ export default {
         const file = require(`@/assets/blog/${name}`).default;
         const regex =
           /^---\s*id:\s*(\d+)\s*title:\s*(.+)\s*date:\s*([\d-]+)\s*tags:\s*([\s\S]+?)\s*---\s*([\s\S]*)/m;
-        // const regex = /^---\s*id:\s*(\d+)\s*title:\s*(.+)\s*date:\s*([\d-]+)\s*---/;
         const fileInfo = file.match(regex);
         if (fileInfo && fileInfo[1] === postID) {
           this.post.title = fileInfo[2];
           this.post.date = fileInfo[3];
           let content = fileInfo[5];
           document.title = `${this.post.title} - Zhengyu Wang's Blog`;
+
           const imgRegex = /!\[([^\]]+)\]\(([^)]+)\)/g;
-          if(!imgRegex.test(content)){
+          if (!imgRegex.test(content)) {
             return content;
           }
 
           content = content.replace(imgRegex, (whole, alt, src) => {
             const localPath = src.match(/blogImg\/(.+)/);
-
-            if(!localPath || !localPath[1]){
+            if (!localPath || !localPath[1]) {
               return whole;
             }
             const imagePath = require(`@/assets/blog/blogImg/${localPath[1]}`);
-            // console.log("Image Path:", imagePath);
             return `![${alt}](${imagePath})`;
           });
-          
-          // console.log("Updated Content:", content);
+
           return content;
         }
       }
-      this.$$router.push(`/notfound`);
+      throw new Error('Post not found');
     },
     formatDate(date) {
-      const options = { year: "numeric", month: "short", day: "numeric", timeZone: "UTC" };
+      if (!date) return '';
+      const options = { year: "numeric", month: "long", day: "numeric", timeZone: "UTC" };
       return new Date(date).toLocaleDateString("en-US", options);
     },
   },
@@ -135,167 +133,253 @@ export default {
 </script>
 
 <style>
-.BlogPostPage {
-  position: relative;
-  background: none;
-  height: 100%;
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-  /* right: 1.1vh; */
-  /* width: 80%; */
-  font-size: 18px;
+.blog-post-page {
+  min-height: 100vh;
+}
+
+.post-main {
+  padding-top: calc(60px + var(--spacing-8));
+  padding-bottom: var(--spacing-12);
+}
+
+.post-article {
+  max-width: var(--container-prose);
   margin: 0 auto;
-  /* width: 75vw; */
-  width: 80vw;
-}
-.main{
-  /* position: relative; */
-
-  padding-left: 30px;
-  padding-right: 50px;
-  margin-left: auto;
-  margin-right: auto;
-  
-  /* left: 10%; */
-  background-color: #fff;
-  /* width: 100%; */
-  /* min-height: 100%; */
-  box-shadow: 0 0 20px #b9b1b1;
-  overflow: auto;
+  padding: 0 var(--spacing-4);
 }
 
-.title-bar {
+/* 文章头部 */
+.post-header {
   text-align: center;
-}
-.content {
-  position: relative;
-
-  padding-left: 1rem;
-
-  margin-left: auto;
-  margin-right: auto;
-}
-.hljs-ln .hljs-ln-code {
-  padding-left: 10px;
-}
-.hljs-ln .hljs-ln-numbers {
-  text-align: center;
-  color: #ccc;
-  border-right: 1px solid #999;
-  /* vertical-align: top; */
-  padding-right: 5px;
-  word-break: normal;
+  margin-bottom: var(--spacing-10);
+  padding-bottom: var(--spacing-6);
+  border-bottom: 1px solid var(--border-color);
 }
 
-pre .code-language-tag{
-  position: relative;
-  top: 0;
-  left: 0;
-  /* padding: 0.1em 0.5em; */
-  padding: 3px 8px;
-  background: #474949;
-  color: #fff;
-  /* border: 2px solid #474949; */
-  border-radius: 5px 5px 0 0;
-  font-size: 0.9em;
+.post-title {
+  margin: 0 0 var(--spacing-4) 0;
+  font-size: var(--text-3xl);
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: var(--leading-tight);
 }
 
-blockquote {
-  background: rgb(249, 249, 249);
-  border-left: 5px solid rgb(204, 204, 204);
-  padding: 15px 20px;
-  margin: 20px 0px;
+.post-meta {
+  color: var(--text-tertiary);
+  font-size: var(--text-sm);
 }
 
-code {
-  font-size: 0.85em;
-  font-family: "Consolas", "Bitstream Vera Sans Mono", "Courier New", Courier,
-    monospace;
-  line-height: 1.2em;
-  /* white-space: normal; */
-  /* word-break: break-all; */
-  overflow-wrap: break-word;
-  background: rgb(242, 239, 230);
-  padding: 0.2em 0.3em;
-  border-radius: 5px;
-  color: rgb(245, 81, 81);
+.post-date {
+  /* 日期样式 */
 }
 
-.content code {
-  font-size: 0.85em;
-  font-family: "Consolas", monospace;
-  line-height: 1.2em;
-  /* word-break: normal; */
-  padding: 0.2em 0.3em;
-  border-radius: 0 5px 5px 5px;
+/* 文章内容覆盖 */
+.post-content {
+  color: var(--text-primary);
+}
+
+.post-content h1,
+.post-content h2,
+.post-content h3,
+.post-content h4,
+.post-content h5,
+.post-content h6 {
+  color: var(--text-primary);
+  margin-top: var(--spacing-8);
+  margin-bottom: var(--spacing-4);
+}
+
+.post-content p {
+  margin-bottom: var(--spacing-4);
+  line-height: var(--leading-relaxed);
+}
+
+.post-content a {
+  color: var(--link-color);
+  text-decoration: underline;
+  text-decoration-color: var(--border-color);
+  text-underline-offset: 2px;
+}
+
+.post-content a:hover {
+  color: var(--accent-primary);
+  text-decoration-color: var(--accent-primary);
+}
+
+/* 引用块 - 竹纹风格 */
+.post-content blockquote {
+  margin: var(--spacing-6) 0;
+  padding: var(--spacing-4) var(--spacing-6);
+  border-left: 3px solid var(--accent-tertiary);
+  background: var(--bg-secondary);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.post-content blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+/* 代码块样式 */
+.post-content .code-block {
+  margin: var(--spacing-6) 0;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--bg-tertiary);
+}
+
+.post-content .code-header {
+  display: flex;
+  align-items: center;
+  padding: var(--spacing-2) var(--spacing-4);
+  background: var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.post-content .code-lang {
+  font-size: var(--text-xs);
+  font-family: var(--font-mono);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.post-content pre code {
+  display: block;
+  padding: var(--spacing-4);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
   overflow-x: auto;
 }
 
-.content img {
+/* 行内代码 */
+.post-content code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  background: var(--bg-tertiary);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  color: var(--accent-primary);
+}
+
+.post-content pre code {
+  background: transparent;
+  padding: 0;
+  color: inherit;
+}
+
+/* 图片 */
+.post-content img {
   display: block;
-  margin: 0 auto;
+  margin: var(--spacing-6) auto;
   max-width: 100%;
   height: auto;
-  transform: none;
-  transform-origin: center;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
 }
 
-.footer {
-  padding: 1rem 2rem;
-  margin-top: 2rem;
-  margin-bottom: 1rem;
-  font-size: 0.9em;
+/* 列表 */
+.post-content ul,
+.post-content ol {
+  margin: var(--spacing-4) 0;
+  padding-left: var(--spacing-6);
 }
 
-.footer .finish {
-  position: relative;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 0.5rem;
+.post-content ul {
+  list-style-type: disc;
 }
 
-.footer .finish::before,
-.footer .finish::after {
-  content: '';
-  flex-grow: 1;
+.post-content ol {
+  list-style-type: decimal;
+}
+
+.post-content li {
+  margin-bottom: var(--spacing-2);
+}
+
+.post-content li::marker {
+  color: var(--accent-primary);
+}
+
+/* 分割线 */
+.post-content hr {
+  margin: var(--spacing-8) 0;
+  border: none;
   height: 1px;
-  background: rgb(94, 94, 94, 0.3);
-  margin: 0 10px;
+  background: var(--border-color);
 }
 
-.finish-word {
-  -webkit-tap-highlight-color: transparent;
-  font-family: "Liu Jian Mao Cao", cursive;
-  font-size: 18px;
-  line-height: 1.7;
-  color: rgb(89, 89, 89, 0.8);
+/* 文章结尾 */
+.post-footer {
+  margin-top: var(--spacing-12);
+  padding-top: var(--spacing-8);
+  border-top: 1px solid var(--border-color);
 }
 
-.footer .info{
+.end-mark {
+  text-align: center;
+  margin-bottom: var(--spacing-6);
+  font-family: var(--font-cursive);
+  font-size: var(--text-lg);
+  color: var(--text-tertiary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.end-mark::before,
+.end-mark::after {
+  content: '';
+  width: 60px;
+  height: 1px;
+  background: var(--border-color);
+  margin: 0 var(--spacing-4);
+}
+
+.post-info {
   text-align: left;
-  margin-top: 1em;
+  color: var(--text-tertiary);
+  font-size: var(--text-sm);
 }
 
+.post-info p {
+  margin: var(--spacing-1) 0;
+}
+
+/* Highlight.js 主题覆盖 */
+.hljs {
+  background: transparent !important;
+}
+
+/* 响应式 */
 @media (max-width: 768px) {
-  .BlogPostPage{
-    transform: scale(0.9);
-    transform-origin: top center;
+  .post-main {
+    padding-top: calc(56px + var(--spacing-6));
+  }
+
+  .post-title {
+    font-size: var(--text-2xl);
+  }
+
+  .post-content pre code {
+    font-size: var(--text-xs);
   }
 }
 
-@media (max-width: 431px) {
-  .BlogPostPage{
-    /* transform: scale(0.9);
-    transform-origin: top center; */
-    height: 100vh;
-    width: 111vw;
-    right: 5.5vw;
+@media (max-width: 480px) {
+  .post-article {
+    padding: 0 var(--spacing-3);
   }
-  .main{
-    padding-left: 10px;
-    padding-right: 20px;
+
+  .post-title {
+    font-size: var(--text-xl);
+  }
+
+  .end-mark::before,
+  .end-mark::after {
+    width: 40px;
   }
 }
 </style>
