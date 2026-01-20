@@ -270,7 +270,6 @@ export default {
 
 .post-content .code-block table.hljs-ln td,
 .post-content table.hljs-ln td {
-  padding: 0 !important;
   border-top: none !important;
   border-bottom: none !important;
   border-left: none !important;
@@ -284,7 +283,7 @@ export default {
   text-align: right;
   color: var(--code-line-number);
   border-right: 1px solid var(--code-line-border) !important;
-  padding: 0 10px 0 0 !important;
+  padding: 0 6px 0 0 !important;
   user-select: none;
   vertical-align: top;
   width: 1%;
