@@ -252,6 +252,8 @@ export default {
   font-size: var(--text-sm);
   line-height: var(--leading-relaxed);
   overflow-x: auto;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 /* 单行代码块（没有行号表格）需要更多 padding-top */
@@ -282,6 +284,7 @@ export default {
   border-left: none !important;
   background: transparent !important;
   line-height: var(--leading-relaxed);
+  font-size: inherit;
 }
 
 /* 行号列 - 带竖线分割 */
