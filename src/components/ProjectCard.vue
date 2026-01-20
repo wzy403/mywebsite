@@ -100,10 +100,6 @@ export default {
   margin-right: var(--spacing-1);
 }
 
-.language-name {
-  /* 语言名称 */
-}
-
 .project-link {
   display: inline-flex;
   align-items: center;

@@ -401,19 +401,11 @@ export default {
   color: #1A1917;
 }
 
-.line-text {
-  /* 行文本 */
-}
-
 /* 输入行 */
 .terminal-input-line {
   display: flex;
   align-items: center;
   margin-top: var(--spacing-2);
-}
-
-.input-text {
-  /* 输入文本 */
 }
 
 .cursor {

@@ -303,10 +303,6 @@ export default {
   font-size: var(--text-sm);
 }
 
-.copyright {
-  /* 版权文字 */
-}
-
 .divider {
   margin: 0 var(--spacing-3);
 }

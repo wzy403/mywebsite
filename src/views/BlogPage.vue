@@ -174,10 +174,6 @@ export default {
   background: var(--border-color);
 }
 
-.posts-list {
-  /* 博客列表 */
-}
-
 /* 响应式 */
 @media (max-width: 768px) {
   .blog-main {

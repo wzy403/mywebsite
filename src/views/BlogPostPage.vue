@@ -169,10 +169,6 @@ export default {
   font-size: var(--text-sm);
 }
 
-.post-date {
-  /* 日期样式 */
-}
-
 /* 文章内容覆盖 */
 .post-content {
   color: var(--text-primary);
