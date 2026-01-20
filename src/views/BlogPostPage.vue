@@ -1,51 +1,47 @@
 <template>
-  <div>
-    <NavBarVue />
-    <div class="BlogPostPage">
-      <div class="main">
-        <div class="title-bar">
-          <h1 class="title">{{ post.title }}</h1>
-          <span class="title">{{ formatDate(post.date) }}</span>
-        </div>
+  <div class="blog-post-page">
+    <NavBar />
 
-        <div class="container">
-          <div class="content" v-html="postContent"></div>
-        </div>
+    <main class="post-main">
+      <article class="post-article">
+        <!-- 文章头部 -->
+        <header class="post-header">
+          <h1 class="post-title">{{ post.title }}</h1>
+          <div class="post-meta">
+            <time class="post-date">{{ formatDate(post.date) }}</time>
+          </div>
+        </header>
 
-        <div class="footer">
-          <div class="finish">
-            <span class="finish-word">完</span>
+        <!-- 文章内容 -->
+        <div class="post-content prose" v-html="postContent"></div>
+
+        <!-- 文章结尾 -->
+        <footer class="post-footer">
+          <div class="end-mark">完</div>
+          <div class="post-info">
+            <p class="author">Author: Zhengyu Wang</p>
+            <p class="copyright">Copyright © {{ copyRightYear }}</p>
           </div>
-          <div class="info">
-            <div class="author">
-              <span>Author: Zhengyu Wang</span>
-            </div>
-            <div class="copy-right">
-              <span>Copyright © {{ this.copyRightYear }}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+        </footer>
+      </article>
+    </main>
   </div>
 </template>
 
 <script>
-import NavBarVue from "@/components/NavBar.vue";
+import NavBar from "@/components/NavBar.vue";
 import MarkdownIt from "markdown-it";
 import hljs from "highlight.js";
-import "highlight.js/styles/rainbow.css";
-// import 'highlight.js/styles/obsidian.css';
-// import 'highlight.js/styles/gradient-dark.css';
-// import 'highlight.js/styles/gradient-light.css';
-// import 'highlight.js/styles/agate.css';
+import 'highlight.js/styles/atom-one-light.css';
+
+// highlightjs-line-numbers.js 需要 window.hljs
 window.hljs = hljs;
-require("highlightjs-line-numbers.js");
+require('highlightjs-line-numbers.js');
 
 export default {
   name: "BlogPostPage",
   components: {
-    NavBarVue,
+    NavBar,
   },
   data() {
     return {
@@ -58,28 +54,38 @@ export default {
     };
   },
   mounted() {
-    hljs.highlightAll(); // highlight code on mount
-    hljs.initLineNumbersOnLoad();
-    // hljs.initHighlightingOnLoad();
-    var blocks = document.querySelectorAll('pre');
-    Array.prototype.forEach.call(blocks, function(block) {
-      var language = block.querySelector('code.hljs').result.language;
-      block.insertAdjacentHTML("afterbegin",`<label class="code-language-tag">${language}</label>`)
+    this.$nextTick(() => {
+      hljs.initLineNumbersOnLoad();
+      this.initCopyButtons();
     });
-    window.scrollTo(0,0);
+    window.scrollTo(0, 0);
   },
   async created() {
     try {
       const postID = this.$route.params.id;
       const markdownContent = this.getPost(postID);
       const md = new MarkdownIt({
-        html: true, // 启用 HTML 标签解析
-        linkify: true, // 自动识别 URL 并转换为链接
-        typographer: true // 启用智能排版
+        html: true,
+        linkify: true,
+        typographer: true,
+        highlight: function (str, lang) {
+          const lineCount = str.trim().split('\n').length;
+          const singleLineClass = lineCount === 1 ? ' no-line-numbers' : '';
+          const encodedCode = encodeURIComponent(str);
+          const copyButton = `<button class="code-copy-btn" type="button" aria-label="Copy code"><svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></button>`;
+
+          if (lang && hljs.getLanguage(lang)) {
+            try {
+              return `<pre class="code-block" data-code="${encodedCode}"><span class="code-lang-badge">${lang}</span>${copyButton}<code class="hljs language-${lang}${singleLineClass}">${hljs.highlight(str, { language: lang }).value}</code></pre>`;
+            } catch (_e) {
+              // highlight failed, fallback to default
+            }
+          }
+          return `<pre class="code-block" data-code="${encodedCode}">${copyButton}<code class="hljs${singleLineClass}">${md.utils.escapeHtml(str)}</code></pre>`;
+        }
       });
       this.postContent = md.render(markdownContent);
     } catch (error) {
-      // console.error("Failed to load post:", error);
       this.$router.push(`/notfound`);
     }
   },
@@ -97,205 +103,540 @@ export default {
         const file = require(`@/assets/blog/${name}`).default;
         const regex =
           /^---\s*id:\s*(\d+)\s*title:\s*(.+)\s*date:\s*([\d-]+)\s*tags:\s*([\s\S]+?)\s*---\s*([\s\S]*)/m;
-        // const regex = /^---\s*id:\s*(\d+)\s*title:\s*(.+)\s*date:\s*([\d-]+)\s*---/;
         const fileInfo = file.match(regex);
         if (fileInfo && fileInfo[1] === postID) {
           this.post.title = fileInfo[2];
           this.post.date = fileInfo[3];
           let content = fileInfo[5];
           document.title = `${this.post.title} - Zhengyu Wang's Blog`;
+
           const imgRegex = /!\[([^\]]+)\]\(([^)]+)\)/g;
-          if(!imgRegex.test(content)){
+          if (!imgRegex.test(content)) {
             return content;
           }
 
           content = content.replace(imgRegex, (whole, alt, src) => {
             const localPath = src.match(/blogImg\/(.+)/);
-
-            if(!localPath || !localPath[1]){
+            if (!localPath || !localPath[1]) {
               return whole;
             }
             const imagePath = require(`@/assets/blog/blogImg/${localPath[1]}`);
-            // console.log("Image Path:", imagePath);
             return `![${alt}](${imagePath})`;
           });
-          
-          // console.log("Updated Content:", content);
+
           return content;
         }
       }
-      this.$$router.push(`/notfound`);
+      throw new Error('Post not found');
     },
     formatDate(date) {
-      const options = { year: "numeric", month: "short", day: "numeric", timeZone: "UTC" };
+      if (!date) return '';
+      const options = { year: "numeric", month: "long", day: "numeric", timeZone: "UTC" };
       return new Date(date).toLocaleDateString("en-US", options);
+    },
+    initCopyButtons() {
+      const copyButtons = document.querySelectorAll('.code-copy-btn');
+      copyButtons.forEach(button => {
+        button.addEventListener('click', this.handleCopyClick);
+      });
+    },
+    async handleCopyClick(event) {
+      const button = event.currentTarget;
+      const pre = button.closest('.code-block');
+      const encodedCode = pre.getAttribute('data-code');
+      const code = decodeURIComponent(encodedCode);
+
+      try {
+        await navigator.clipboard.writeText(code);
+        this.showCopySuccess(button);
+      } catch (err) {
+        const textarea = document.createElement('textarea');
+        textarea.value = code;
+        textarea.style.position = 'fixed';
+        textarea.style.left = '-9999px';
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
+          document.execCommand('copy');
+          this.showCopySuccess(button);
+        } catch (e) {
+          console.error('Copy failed:', e);
+        }
+        document.body.removeChild(textarea);
+      }
+    },
+    showCopySuccess(button) {
+      button.classList.add('copied');
+      setTimeout(() => {
+        button.classList.remove('copied');
+      }, 2000);
     },
   },
 };
 </script>
 
 <style>
-.BlogPostPage {
-  position: relative;
-  background: none;
-  height: 100%;
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-  /* right: 1.1vh; */
-  /* width: 80%; */
-  font-size: 18px;
+.blog-post-page {
+  min-height: 100vh;
+}
+
+.post-main {
+  padding-top: calc(60px + var(--spacing-8));
+  padding-bottom: var(--spacing-12);
+}
+
+.post-article {
+  max-width: var(--container-prose);
   margin: 0 auto;
-  /* width: 75vw; */
-  width: 80vw;
-}
-.main{
-  /* position: relative; */
-
-  padding-left: 30px;
-  padding-right: 50px;
-  margin-left: auto;
-  margin-right: auto;
-  
-  /* left: 10%; */
-  background-color: #fff;
-  /* width: 100%; */
-  /* min-height: 100%; */
-  box-shadow: 0 0 20px #b9b1b1;
-  overflow: auto;
+  padding: 0 var(--spacing-4);
 }
 
-.title-bar {
+/* 文章头部 */
+.post-header {
   text-align: center;
+  margin-bottom: var(--spacing-10);
+  padding-bottom: var(--spacing-6);
+  border-bottom: 1px solid var(--border-color);
 }
-.content {
+
+.post-title {
+  margin: 0 0 var(--spacing-4) 0;
+  font-size: var(--text-3xl);
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: var(--leading-tight);
+}
+
+.post-meta {
+  color: var(--text-tertiary);
+  font-size: var(--text-sm);
+}
+
+/* 文章内容覆盖 */
+.post-content {
+  color: var(--text-primary);
+}
+
+.post-content h1,
+.post-content h2,
+.post-content h3,
+.post-content h4,
+.post-content h5,
+.post-content h6 {
+  color: var(--text-primary);
+  margin-top: var(--spacing-8);
+  margin-bottom: var(--spacing-4);
+}
+
+.post-content p {
+  margin-bottom: var(--spacing-4);
+  line-height: var(--leading-relaxed);
+}
+
+.post-content a {
+  color: var(--link-color);
+  text-decoration: underline;
+  text-decoration-color: var(--border-color);
+  text-underline-offset: 2px;
+}
+
+.post-content a:hover {
+  color: var(--accent-primary);
+  text-decoration-color: var(--accent-primary);
+}
+
+/* 引用块 - 竹纹风格 */
+.post-content blockquote {
+  margin: var(--spacing-6) 0;
+  padding: var(--spacing-4) var(--spacing-6);
+  border-left: 3px solid var(--accent-tertiary);
+  background: var(--bg-secondary);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.post-content blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+/* 代码块样式 */
+.post-content .code-block {
   position: relative;
-
-  padding-left: 1rem;
-
-  margin-left: auto;
-  margin-right: auto;
-}
-.hljs-ln .hljs-ln-code {
-  padding-left: 10px;
-}
-.hljs-ln .hljs-ln-numbers {
-  text-align: center;
-  color: #ccc;
-  border-right: 1px solid #999;
-  /* vertical-align: top; */
-  padding-right: 5px;
-  word-break: normal;
+  margin: var(--spacing-6) 0;
+  padding-bottom: 0;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--code-bg);
+  border: 1px solid var(--code-border);
 }
 
-pre .code-language-tag{
-  position: relative;
+/* 代码块横向滚动条 - 常驻显示在容器底部 */
+.post-content pre code::-webkit-scrollbar {
+  height: 5px;
+}
+
+.post-content pre code::-webkit-scrollbar-track {
+  background: var(--code-bg);
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+}
+
+.post-content pre code::-webkit-scrollbar-thumb {
+  background: var(--text-tertiary);
+  border-radius: 3px;
+}
+
+/* 语言角标 - 左上角 */
+.post-content .code-lang-badge {
+  position: absolute;
   top: 0;
   left: 0;
-  /* padding: 0.1em 0.5em; */
-  padding: 3px 8px;
-  background: #474949;
-  color: #fff;
-  /* border: 2px solid #474949; */
-  border-radius: 5px 5px 0 0;
-  font-size: 0.9em;
+  padding: 2px 10px;
+  font-size: 11px;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: var(--code-lang-bg);
+  color: var(--code-lang-text);
+  border-radius: 0 0 var(--radius-sm) 0;
+  z-index: 1;
 }
 
-blockquote {
-  background: rgb(249, 249, 249);
-  border-left: 5px solid rgb(204, 204, 204);
-  padding: 15px 20px;
-  margin: 20px 0px;
-}
-
-code {
-  font-size: 0.85em;
-  font-family: "Consolas", "Bitstream Vera Sans Mono", "Courier New", Courier,
-    monospace;
-  line-height: 1.2em;
-  /* white-space: normal; */
-  /* word-break: break-all; */
-  overflow-wrap: break-word;
-  background: rgb(242, 239, 230);
-  padding: 0.2em 0.3em;
-  border-radius: 5px;
-  color: rgb(245, 81, 81);
-}
-
-.content code {
-  font-size: 0.85em;
-  font-family: "Consolas", monospace;
-  line-height: 1.2em;
-  /* word-break: normal; */
-  padding: 0.2em 0.3em;
-  border-radius: 0 5px 5px 5px;
+.post-content pre code {
+  display: block;
+  padding: var(--spacing-6) var(--spacing-3) var(--spacing-3) var(--spacing-2);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  white-space: pre;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
   overflow-x: auto;
 }
 
-.content img {
+/* 单行代码块（没有行号表格）需要更多 padding-top */
+.post-content pre code.no-line-numbers {
+  padding-top: 12px;
+}
+
+/* 代码块 - 上下对称 */
+.post-content pre code.hljs {
+  padding-bottom: 12px;
+}
+
+/* 行号表格 - 紧凑布局（覆盖 typography.scss 的全局表格样式） */
+.post-content .code-block table.hljs-ln,
+.post-content table.hljs-ln {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  margin: 12px 0 0 0;
+  border: none;
+}
+
+.post-content .code-block table.hljs-ln tr,
+.post-content table.hljs-ln tr {
+  background: transparent !important;
+  border: none !important;
+}
+
+.post-content .code-block table.hljs-ln td,
+.post-content table.hljs-ln td {
+  border-top: none !important;
+  border-bottom: none !important;
+  border-left: none !important;
+  background: transparent !important;
+  line-height: var(--leading-relaxed);
+  font-size: inherit;
+}
+
+/* 行号列 - 带竖线分割 */
+.post-content .code-block td.hljs-ln-numbers,
+.post-content td.hljs-ln-numbers {
+  text-align: right;
+  color: var(--code-line-number);
+  border-right: 1px solid var(--code-line-border) !important;
+  padding: 0 6px 0 0 !important;
+  user-select: none;
+  vertical-align: top;
+  width: 1%;
+  white-space: nowrap;
+}
+
+/* 代码列 */
+.post-content .code-block td.hljs-ln-code,
+.post-content td.hljs-ln-code {
+  padding: 0 0 0 12px !important;
+  border-right: none !important;
+  white-space: pre;
+}
+
+/* 行内代码 */
+.post-content code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  background: var(--bg-tertiary);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  color: var(--accent-primary);
+}
+
+.post-content pre code {
+  background: transparent;
+  color: inherit;
+}
+
+/* 图片 */
+.post-content img {
   display: block;
-  margin: 0 auto;
+  margin: var(--spacing-6) auto;
   max-width: 100%;
   height: auto;
-  transform: none;
-  transform-origin: center;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
 }
 
-.footer {
-  padding: 1rem 2rem;
-  margin-top: 2rem;
-  margin-bottom: 1rem;
-  font-size: 0.9em;
+/* 列表 */
+.post-content ul,
+.post-content ol {
+  margin: var(--spacing-4) 0;
+  padding-left: var(--spacing-6);
 }
 
-.footer .finish {
-  position: relative;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 0.5rem;
+.post-content ul {
+  list-style-type: disc;
 }
 
-.footer .finish::before,
-.footer .finish::after {
-  content: '';
-  flex-grow: 1;
+.post-content ol {
+  list-style-type: decimal;
+}
+
+.post-content li {
+  margin-bottom: var(--spacing-2);
+}
+
+.post-content li::marker {
+  color: var(--accent-primary);
+}
+
+/* 分割线 */
+.post-content hr {
+  margin: var(--spacing-8) 0;
+  border: none;
   height: 1px;
-  background: rgb(94, 94, 94, 0.3);
-  margin: 0 10px;
+  background: var(--border-color);
 }
 
-.finish-word {
-  -webkit-tap-highlight-color: transparent;
-  font-family: "Liu Jian Mao Cao", cursive;
-  font-size: 18px;
-  line-height: 1.7;
-  color: rgb(89, 89, 89, 0.8);
+/* 文章结尾 */
+.post-footer {
+  margin-top: var(--spacing-5);
+  padding-top: var(--spacing-5);
+  /* border-top: 1px solid var(--border-color); */
 }
 
-.footer .info{
+.end-mark {
+  width: 100%;
+  margin: 0 0 var(--spacing-6) 0 !important;
+  font-family: var(--font-cursive);
+  font-size: var(--text-lg);
+  color: var(--text-tertiary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.end-mark::before,
+.end-mark::after {
+  content: '' !important;
+  flex: 1;
+  height: 1px;
+  background: var(--border-color);
+  letter-spacing: normal;
+}
+
+.end-mark::before {
+  margin-right: var(--spacing-4);
+}
+
+.end-mark::after {
+  margin-left: var(--spacing-4);
+}
+
+.post-info {
   text-align: left;
-  margin-top: 1em;
+  color: var(--text-tertiary);
+  font-size: var(--text-sm);
 }
 
+.post-info p {
+  margin: var(--spacing-1) 0;
+}
+
+/* Highlight.js 主题覆盖 */
+.hljs {
+  background: transparent !important;
+}
+
+/* 深色模式语法高亮覆盖 */
+[data-theme="dark"] .hljs {
+  background: transparent !important;
+}
+[data-theme="dark"] .hljs-keyword,
+[data-theme="dark"] .hljs-selector-tag { color: #C678DD; }
+[data-theme="dark"] .hljs-string,
+[data-theme="dark"] .hljs-doctag { color: #98C379; }
+[data-theme="dark"] .hljs-number { color: #D19A66; }
+[data-theme="dark"] .hljs-function .hljs-title,
+[data-theme="dark"] .hljs-title.function_ { color: #61AFEF; }
+[data-theme="dark"] .hljs-comment { color: #5C6370; font-style: italic; }
+[data-theme="dark"] .hljs-title { color: #61AFEF; }
+[data-theme="dark"] .hljs-params { color: #ABB2BF; }
+[data-theme="dark"] .hljs-built_in { color: #E6C07B; }
+[data-theme="dark"] .hljs-literal,
+[data-theme="dark"] .hljs-type { color: #56B6C2; }
+[data-theme="dark"] .hljs-attr,
+[data-theme="dark"] .hljs-attribute { color: #D19A66; }
+[data-theme="dark"] .hljs-variable,
+[data-theme="dark"] .hljs-template-variable { color: #E06C75; }
+[data-theme="dark"] .hljs-class .hljs-title,
+[data-theme="dark"] .hljs-title.class_ { color: #E6C07B; }
+[data-theme="dark"] .hljs-name,
+[data-theme="dark"] .hljs-selector-id,
+[data-theme="dark"] .hljs-selector-class { color: #E06C75; }
+[data-theme="dark"] .hljs-regexp { color: #98C379; }
+[data-theme="dark"] .hljs-symbol { color: #56B6C2; }
+[data-theme="dark"] .hljs-meta { color: #61AFEF; }
+[data-theme="dark"] .hljs-deletion { color: #E06C75; }
+[data-theme="dark"] .hljs-addition { color: #98C379; }
+
+/* 响应式 */
 @media (max-width: 768px) {
-  .BlogPostPage{
-    transform: scale(0.9);
-    transform-origin: top center;
+  .post-main {
+    padding-top: calc(56px + var(--spacing-6));
+  }
+
+  .post-title {
+    font-size: var(--text-2xl);
+  }
+
+  .post-content pre code {
+    font-size: var(--text-xs);
   }
 }
 
-@media (max-width: 431px) {
-  .BlogPostPage{
-    /* transform: scale(0.9);
-    transform-origin: top center; */
-    height: 100vh;
-    width: 111vw;
-    right: 5.5vw;
+@media (max-width: 480px) {
+  .post-article {
+    padding: 0 var(--spacing-3);
   }
-  .main{
-    padding-left: 10px;
-    padding-right: 20px;
+
+  .post-title {
+    font-size: var(--text-xl);
+  }
+
+  .end-mark::before,
+  .end-mark::after {
+    width: 40px;
+  }
+}
+
+/* 复制按钮 */
+.post-content .code-copy-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 24px;
+  background: var(--code-lang-bg);
+  color: var(--code-lang-text);
+  border: none;
+  border-radius: 0 0 0 var(--radius-sm);
+  cursor: pointer;
+  opacity: 0;
+  z-index: 1;
+  transform: translateY(-4px);
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease,
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.post-content .code-block:hover .code-copy-btn {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.post-content .code-copy-btn:hover {
+  background: var(--accent-primary);
+  color: var(--bg-primary);
+  transform: scale(1.05);
+}
+
+.post-content .code-copy-btn:active {
+  transform: scale(0.95);
+  transition: transform 0.1s ease;
+}
+
+.post-content .code-copy-btn svg {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.post-content .code-copy-btn:hover .copy-icon {
+  transform: rotate(-8deg);
+}
+
+.post-content .code-copy-btn .check-icon {
+  display: none;
+}
+
+.post-content .code-copy-btn.copied {
+  opacity: 1;
+  background: var(--border-color);
+  color: var(--text-primary);
+  transform: translateY(0);
+  animation: copySuccess 0.3s ease;
+}
+
+.post-content .code-copy-btn.copied .copy-icon {
+  display: none;
+}
+
+.post-content .code-copy-btn.copied .check-icon {
+  display: block;
+  animation: checkPop 0.3s ease;
+}
+
+@keyframes copySuccess {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+@keyframes checkPop {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.15);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* 移动端始终显示复制按钮 */
+@media (max-width: 768px) {
+  .post-content .code-copy-btn {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 </style>

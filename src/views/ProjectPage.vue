@@ -1,25 +1,38 @@
 <template>
-  <NavBarVue></NavBarVue>
-  <div class="projects-container">
-    <h1>Projects</h1>
-    <div v-if="projects.length === 0">Loading...</div>
-    <div class="projects-grid">
-      <div v-for="projectInfo in projects" :key="projectInfo.id" class="project-card">
-        <ProjectCard :project="projectInfo" />
+  <div class="project-page">
+    <NavBar />
+
+    <main class="project-main">
+      <header class="project-header">
+        <h1 class="page-title">Projects</h1>
+        <p class="page-subtitle">创意之作，技术实践</p>
+      </header>
+
+      <div class="project-container">
+        <div v-if="projects.length === 0" class="loading">
+          <span class="loading-text">Loading...</span>
+        </div>
+        <div v-else class="projects-grid">
+          <ProjectCard
+            v-for="projectInfo in projects"
+            :key="projectInfo.id"
+            :project="projectInfo"
+          />
+        </div>
       </div>
-    </div>
+    </main>
   </div>
 </template>
 
-<script scoped>
-import axios from 'axios';
+<script>
 import ProjectCard from '@/components/ProjectCard.vue';
-import NavBarVue from '@/components/NavBar.vue';
+import NavBar from '@/components/NavBar.vue';
+
 export default {
   name: 'ProjectPage',
   components: {
     ProjectCard,
-    NavBarVue,
+    NavBar,
   },
   data() {
     return {
@@ -27,35 +40,84 @@ export default {
     };
   },
   created() {
-    // this.fetchProjects();
     this.projects = require('@/assets/projectesList.json');
-  },
-  methods: {
-    async fetchProjects() {
-      try {
-        const response = await axios.get('/api/projecte/getProjectes');
-        this.projects = response.data;
-        console.log(response.data);
-      } catch (error) {
-        console.error('Error fetching projects:', error);
-      }
-    }
   }
 };
 </script>
 
 <style scoped>
-.projects-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
+.project-page {
+  min-height: 100vh;
+}
+
+.project-main {
+  padding-top: calc(60px + var(--spacing-8));
+  padding-bottom: var(--spacing-12);
+}
+
+.project-header {
   text-align: center;
-  color: #fff;
+  margin-bottom: var(--spacing-8);
+  padding: 0 var(--spacing-4);
+}
+
+.page-title {
+  margin: 0 0 var(--spacing-2) 0;
+  font-size: var(--text-3xl);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.page-subtitle {
+  margin: 0;
+  font-size: var(--text-base);
+  color: var(--text-tertiary);
+}
+
+.project-container {
+  max-width: var(--container-lg);
+  margin: 0 auto;
+  padding: 0 var(--spacing-4);
+}
+
+.loading {
+  text-align: center;
+  padding: var(--spacing-12);
+  color: var(--text-tertiary);
+}
+
+.loading-text {
+  font-size: var(--text-base);
 }
 
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--spacing-6);
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+  .project-main {
+    padding-top: calc(56px + var(--spacing-6));
+  }
+
+  .page-title {
+    font-size: var(--text-2xl);
+  }
+
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .project-container {
+    padding: 0 var(--spacing-2);
+  }
+
+  .projects-grid {
+    gap: var(--spacing-4);
+  }
 }
 </style>

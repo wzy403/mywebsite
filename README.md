@@ -59,21 +59,23 @@ tags:
 
 ```
 mywebsite/
-├── public/
+├── public/                 # Static assets
 ├── src/
 │   ├── assets/
-│   │   └── blog/
-│   │   │   └── blogImg/
-│   │   └── img/
-│   ├── components/
-|   ├── router/
-│   ├── views/
-│   ├── App.vue
-│   └── main.js
+│   │   ├── blog/           # Markdown blog posts
+│   │   │   └── blogImg/    # Images used in blog posts
+│   │   └── img/            # General website images
+│   ├── components/         # Reusable Vue components
+│   ├── composables/        # Vue 3 composition functions
+│   ├── router/             # Vue Router configuration
+│   ├── styles/             # Global SCSS styles
+│   ├── views/              # Page-level Vue components
+│   ├── App.vue             # Root Vue component
+│   └── main.js             # Application entry point
 ├── .gitignore
 ├── README.md
 ├── package.json
-└── webpack.config.js
+└── vue.config.js
 ```
 
 ## Contributing

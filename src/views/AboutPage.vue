@@ -1,56 +1,65 @@
 <template>
-  <NavBarVue />
-  <div class="about">
-    <div class="terminal" @click="focusCommandInput">
-      <div class="terminal-title">
-        <div class="terminal-title-btn red"></div>
-        <div class="terminal-title-btn yellow"></div>
-        <div class="terminal-title-btn green"></div>
-        <div class="terminal-title-text">About Me</div>
-      </div>
-      <div class="terminal-content" ref="terminalContent">
-        <div
-          v-for="(line, index) in content"
-          :key="index"
-          class="terminal-content-text"
-        >
-          <span v-if="line.isCommand">➜ ~ </span>
-          <span v-if="line.needColor" :class="line.class">{{
-            line.colorText
-          }}</span>
-          <span>{{ line.text }}</span>
+  <div class="about-page">
+    <NavBar />
+
+    <main class="about-main">
+      <div class="terminal" @click="focusCommandInput">
+        <!-- 终端标题栏 -->
+        <div class="terminal-header">
+          <div class="terminal-buttons">
+            <span class="terminal-btn close"></span>
+            <span class="terminal-btn minimize"></span>
+            <span class="terminal-btn maximize"></span>
+          </div>
+          <span class="terminal-title">About Me</span>
+          <div class="terminal-spacer"></div>
         </div>
-        <div class="terminal-input">
-          <div class="terminal-input-text">
-            <span class="termain-pointer">➜ ~ </span>
-            <span class="command-display">{{ commandBeforeCursor }}</span>
-            <span class="cursor">&nbsp;&nbsp;</span>
-            <span class="command-display">{{ commandAfterCursor }}</span>
+
+        <!-- 终端内容 -->
+        <div class="terminal-body" ref="terminalContent">
+          <div
+            v-for="(line, index) in content"
+            :key="index"
+            class="terminal-line"
+          >
+            <span v-if="line.isCommand" class="prompt">❯ </span>
+            <span v-if="line.needColor" class="tag" :class="line.class">
+              {{ line.colorText }}
+            </span>
+            <span class="line-text">{{ line.text }}</span>
+          </div>
+
+          <!-- 输入行 -->
+          <div class="terminal-input-line">
+            <span class="prompt">❯ </span>
+            <span class="input-text">{{ commandBeforeCursor }}</span>
+            <span class="cursor"></span>
+            <span class="input-text">{{ commandAfterCursor }}</span>
             <input
               ref="commandInput"
-              class="command-input"
+              class="hidden-input"
               type="text"
               v-model="command"
               @input="updateCursor"
               @keyup="updateCursor"
               @keypress.enter="processCommand"
-              v-show = this.isCommendInputDisplay
+              v-show="isCommendInputDisplay"
             />
           </div>
         </div>
       </div>
-    </div>
+    </main>
   </div>
 </template>
 
-<script scoped>
-import NavBarVue from "@/components/NavBar.vue";
+<script>
+import NavBar from "@/components/NavBar.vue";
 import aboutCommand from "@/assets/aboutCommand.json";
 
 export default {
   name: "AboutPage",
   components: {
-    NavBarVue,
+    NavBar,
   },
   data() {
     return {
@@ -79,19 +88,19 @@ export default {
 
       this.content.push({
         needColor: true,
-        class: ["System", "color-span"],
+        class: ["tag-system"],
         colorText: "System",
         text: ` Type "help" to get a supporting command list.`,
       });
       this.content.push({
         needColor: true,
-        class: ["System", "color-span"],
+        class: ["tag-system"],
         colorText: "System",
         text: ` Type "clear" to clear the terminal screen.`,
       });
       this.content.push({
         needColor: true,
-        class: ["System", "color-span"],
+        class: ["tag-system"],
         colorText: "System",
         text: ` Type "exit" to return to the main page.`,
       });
@@ -109,11 +118,11 @@ export default {
       for (let i = 0; i < 3; i++) {
         await new Promise((resolve) => setTimeout(resolve, 300));
         loadingText.text += ".";
-        this.$forceUpdate(); // 强制刷新视图
+        this.$forceUpdate();
       }
 
       await new Promise((resolve) => setTimeout(resolve, 500));
-      this.content.pop(); // 移除Loading...文字
+      this.content.pop();
     },
 
     async typeContent(inputCommand) {
@@ -137,7 +146,7 @@ export default {
       } else {
         obj = {
           needColor: true,
-          class: [inputCommand, key, "color-span"],
+          class: [this.getTagClass(key)],
           colorText: key,
           text: "",
         };
@@ -147,14 +156,35 @@ export default {
       for (let char of line) {
         currentText += char;
         obj.text = currentText;
-        this.$forceUpdate(); // 强制刷新视图
-        await new Promise((resolve) => setTimeout(resolve, 10)); // 每个字符间隔时间
+        this.$forceUpdate();
+        await new Promise((resolve) => setTimeout(resolve, 10));
       }
-      await new Promise((resolve) => setTimeout(resolve, 100)); // 每行之间间隔时间
+      await new Promise((resolve) => setTimeout(resolve, 100));
+    },
+
+    getTagClass(key) {
+      const classMap = {
+        'Name': 'tag-name',
+        'School': 'tag-name',
+        'Program': 'tag-name',
+        'Email': 'tag-name',
+        'connect': 'tag-name',
+        'help': 'tag-success',
+        'ls': 'tag-success',
+        'A': 'tag-success',
+        'Done': 'tag-success',
+        'System': 'tag-system',
+        'B': 'tag-warning',
+        'Stacking': 'tag-error',
+        'Error': 'tag-error',
+      };
+      return classMap[key] || 'tag-system';
     },
 
     focusCommandInput() {
-      this.$refs.commandInput.focus();
+      if (this.$refs.commandInput) {
+        this.$refs.commandInput.focus();
+      }
     },
 
     updateCursor() {
@@ -166,8 +196,8 @@ export default {
 
     processCommand() {
       const inputCommand = this.command.trim().toLowerCase();
-      console.log(inputCommand);
       this.content.push({ isCommand: true, text: inputCommand });
+
       if (inputCommand === "clear") {
         this.content = [];
         this.command = "";
@@ -180,13 +210,12 @@ export default {
         return;
       }
 
-      if (inputCommand === "blog"){
+      if (inputCommand === "blog") {
         this.$router.push({ path: "/blog" });
         return;
       }
 
-      if(inputCommand === "project"){
-        // 我想通过新页打开我的项目地址
+      if (inputCommand === "project") {
         this.$router.push({ path: "/project" });
         return;
       }
@@ -201,7 +230,7 @@ export default {
 
             this.content.push({
               needColor: true,
-              class: [inputCommand, key, "color-span"],
+              class: [this.getTagClass(key)],
               colorText: key,
               text: line,
             });
@@ -210,13 +239,13 @@ export default {
       } else {
         this.content.push({
           needColor: true,
-          class: ["Error", "color-span"],
+          class: ["tag-error"],
           colorText: "Error",
           text: ` command not found: ${inputCommand}`,
         });
         this.content.push({
           needColor: true,
-          class: ["System", "color-span"],
+          class: ["tag-system"],
           colorText: "System",
           text: ` Type "help" to get a supporting command list.`,
         });
@@ -225,45 +254,6 @@ export default {
       this.command = "";
       this.focusCommandInput();
 
-      // 跳转至最底部
-      this.$nextTick(() => {
-        const terminalContent = this.$refs.terminalContent;
-        terminalContent.scrollTop = terminalContent.scrollHeight;
-      });
-    },
-
-    initTerminal(inputCommand) {
-      if (aboutCommand[inputCommand]) {
-        for (let key in aboutCommand[inputCommand]) {
-          for (let line of aboutCommand[inputCommand][key]) {
-            this.content.push({
-              needColor: true,
-              class: [inputCommand, key, "color-span"],
-              colorText: key,
-              text: line,
-            });
-          }
-        }
-      }
-
-      this.content.push({
-        needColor: true,
-        class: ["System", "color-span"],
-        colorText: "System",
-        text: ` Type "help" to get a supporting command list.`,
-      });
-      this.content.push({
-        needColor: true,
-        class: ["System", "color-span"],
-        colorText: "System",
-        text: ` Type "clear" to clear the terminal screen.`,
-      });
-      this.content.push({
-        needColor: true,
-        class: ["System", "color-span"],
-        colorText: "System",
-        text: ` Type "exit" to return to the main page.`,
-      });
       this.$nextTick(() => {
         const terminalContent = this.$refs.terminalContent;
         terminalContent.scrollTop = terminalContent.scrollHeight;
@@ -274,173 +264,209 @@ export default {
 </script>
 
 <style scoped>
-.about {
-  text-align: left;
-  color: #ffff;
-  display: flex;
-  font-weight: 800;
-  flex-direction: column;
+.about-page {
+  min-height: 100vh;
 }
 
+.about-main {
+  padding-top: calc(60px + var(--spacing-6));
+  padding-bottom: var(--spacing-8);
+  display: flex;
+  justify-content: center;
+}
+
+/* 终端容器 */
 .terminal {
-  background-color: #000;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  margin: 20px auto;
-  margin-top: 3.5vh;
-  max-width: 900px;
-  padding-bottom: 20px;
   width: 90%;
+  max-width: 900px;
+  background: var(--terminal-bg);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-xl);
+  overflow: hidden;
 }
 
-.terminal-title {
-  background-color: #333;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+/* 终端标题栏 */
+.terminal-header {
   display: flex;
-  padding: 5px 10px;
+  align-items: center;
+  padding: var(--spacing-3) var(--spacing-4);
+  background: #2D2A28;
+  border-bottom: 1px solid #3A3735;
+}
+
+.terminal-buttons {
+  display: flex;
   align-items: center;
 }
 
-.terminal-title-btn {
+.terminal-btn {
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
-  height: 15px;
-  width: 15px;
-  margin-left: 5px;
+  margin-right: var(--spacing-2);
 }
 
-.terminal-title-text {
-  font-family: sans-serif;
-  color: #fff;
-  font-size: 1rem;
-  font-weight: bold;
-  margin-left: 38%;
+.terminal-btn.close {
+  background: #FF5F57;
 }
 
-.terminal-content {
-  height: 75vh;
+.terminal-btn.minimize {
+  background: #FFBD2E;
+}
+
+.terminal-btn.maximize {
+  background: #28CA42;
+}
+
+.terminal-title {
+  flex: 1;
+  text-align: center;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--terminal-text);
+  opacity: 0.8;
+}
+
+.terminal-spacer {
+  width: 60px;
+}
+
+/* 终端内容 */
+.terminal-body {
+  height: 70vh;
+  padding: var(--spacing-4);
   overflow-y: auto;
-  padding: 20px;
-}
-.terminal-content::-webkit-scrollbar {
-  display: none;
-}
-
-.terminal-content-text {
-  color: #fff;
-  font-size: 16px;
-  line-height: 2.5;
-}
-.terminal-content-text .color-span {
-  padding-left: 5px;
-  padding-right: 5px;
-  padding-bottom: 3px;
-}
-.terminal-content-text .Name,
-.terminal-content-text .School,
-.terminal-content-text .Program,
-.terminal-content-text .Email,
-.terminal-content-text .connect {
-  background-color: rgb(41, 128, 185);
-}
-.terminal-content-text .help,
-.terminal-content-text .ls,
-.terminal-content-text .A,
-.terminal-content-text .Done {
-  background-color: rgb(39, 174, 96);
-}
-.terminal-content-text .System {
-  background-color: rgb(153, 153, 153);
-}
-.terminal-content-text .B {
-  background-color: rgb(243, 156, 18);
-}
-.terminal-content-text .Stacking,
-.terminal-content-text .Error {
-  background-color: rgb(192, 57, 43);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  line-height: 1.8;
+  color: var(--terminal-text);
 }
 
-.terminal-input {
-  /* background-color: #333; */
-  /* border-bottom-left-radius: 10px; */
-  /* border-bottom-right-radius: 10px; */
-  /* padding: 5px 10px; */
-  padding-top: 10px;
-  font-weight: 400;
-  word-break: break-all;
+.terminal-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.terminal-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.terminal-body::-webkit-scrollbar-thumb {
+  background: #3A3735;
+  border-radius: var(--radius-full);
+}
+
+/* 终端行 */
+.terminal-line {
+  margin-bottom: var(--spacing-1);
+  word-break: break-word;
+}
+
+.prompt {
+  color: var(--terminal-prompt);
+  font-weight: 600;
+}
+
+/* 标签样式 */
+.tag {
+  display: inline-block;
+  padding: 1px 8px;
+  margin-right: var(--spacing-2);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-xs);
+  font-weight: 500;
+}
+
+.tag-name {
+  background: var(--tag-name);
+  color: #1A1917;
+}
+
+.tag-success {
+  background: var(--tag-skill-a);
+  color: #1A1917;
+}
+
+.tag-system {
+  background: var(--tag-system);
+  color: #1A1917;
+}
+
+.tag-warning {
+  background: var(--tag-skill-b);
+  color: #1A1917;
+}
+
+.tag-error {
+  background: var(--tag-error);
+  color: #1A1917;
+}
+
+/* 输入行 */
+.terminal-input-line {
+  display: flex;
+  align-items: center;
+  margin-top: var(--spacing-2);
 }
 
 .cursor {
-  background-color: #fff;
-  color: #000;
-  line-height: 1.5;
-  animation: flash 1s infinite;
+  display: inline-block;
+  width: 8px;
+  height: 16px;
+  background: var(--terminal-text);
+  animation: cursorBlink 1s ease-in-out infinite;
 }
 
-.terminal-input-text {
-  color: #fff;
-  font-weight: 800;
-  font-size: 16px;
-}
-
-.termain-pointer {
-  word-break: break-all;
-  font-weight: 800;
-  color: rgb(155, 247, 134);
-}
-
-.command-input {
-  width: 0px;
-  cursor: default;
-  opacity: 0;
-}
-
-.red {
-  background-color: #ff5f56;
-}
-
-.yellow {
-  background-color: #ffbd2e;
-}
-
-.green {
-  background-color: #27c93f;
-}
-
-@keyframes flash {
-  0% {
+@keyframes cursorBlink {
+  0%, 100% {
     opacity: 1;
   }
   50% {
     opacity: 0;
   }
-  100% {
-    opacity: 1;
-  }
 }
 
+.hidden-input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* 响应式 */
 @media (max-width: 768px) {
-  .terminal {
-    width: 80%;
+  .about-main {
+    padding-top: calc(56px + var(--spacing-4));
   }
 
-  .terminal-title-text {
-    margin-left: 34%;
+  .terminal {
+    width: 95%;
+    border-radius: var(--radius-md);
+  }
+
+  .terminal-body {
+    height: 65vh;
+    font-size: var(--text-xs);
   }
 }
 
-@media (max-width: 431px) {
-
+@media (max-width: 480px) {
   .terminal {
     width: 100%;
+    border-radius: 0;
   }
 
-  .terminal-title-text {
-    margin-left: 25%;
+  .terminal-body {
+    height: 60vh;
+    padding: var(--spacing-3);
   }
 
-  .terminal-content-text {
-    font-size: 12px;
+  .terminal-header {
+    padding: var(--spacing-2) var(--spacing-3);
+  }
+
+  .tag {
+    padding: 1px 6px;
+    font-size: 10px;
   }
 }
 </style>

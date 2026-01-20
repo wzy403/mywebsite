@@ -1,0 +1,238 @@
+// ============================================
+// 排版样式
+// ============================================
+
+// ========== 标题 ==========
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  line-height: var(--leading-tight);
+  color: var(--text-primary);
+}
+
+h1 {
+  font-size: var(--text-4xl);
+  letter-spacing: -0.025em;
+}
+
+h2 {
+  font-size: var(--text-3xl);
+  letter-spacing: -0.025em;
+}
+
+h3 {
+  font-size: var(--text-2xl);
+}
+
+h4 {
+  font-size: var(--text-xl);
+}
+
+h5 {
+  font-size: var(--text-lg);
+}
+
+h6 {
+  font-size: var(--text-base);
+}
+
+// ========== 段落 ==========
+p {
+  margin-bottom: var(--spacing-4);
+  line-height: var(--leading-relaxed);
+}
+
+// ========== 文章内容样式 ==========
+.prose {
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+  color: var(--text-primary);
+
+  // 标题
+  h1, h2, h3, h4, h5, h6 {
+    margin-top: var(--spacing-8);
+    margin-bottom: var(--spacing-4);
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  h1 { font-size: var(--text-3xl); }
+  h2 { font-size: var(--text-2xl); }
+  h3 { font-size: var(--text-xl); }
+  h4 { font-size: var(--text-lg); }
+
+  // 段落
+  p {
+    margin-bottom: var(--spacing-4);
+  }
+
+  // 链接
+  a {
+    color: var(--link-color);
+    text-decoration: underline;
+    text-decoration-color: var(--border-color);
+    text-underline-offset: 2px;
+    transition: all var(--transition-fast);
+
+    &:hover {
+      color: var(--accent-primary);
+      text-decoration-color: var(--accent-primary);
+    }
+  }
+
+  // 粗体
+  strong, b {
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  // 斜体
+  em, i {
+    font-style: italic;
+  }
+
+  // 引用块 - 竹纹边框风格
+  blockquote {
+    margin: var(--spacing-6) 0;
+    padding: var(--spacing-4) var(--spacing-6);
+    border-left: 3px solid var(--accent-tertiary);
+    background: var(--bg-secondary);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    color: var(--text-secondary);
+    font-style: italic;
+
+    p:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  // 代码 - 行内
+  code {
+    font-family: var(--font-mono);
+    font-size: 0.875em;
+    background: var(--bg-tertiary);
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+    color: var(--accent-primary);
+  }
+
+  // 代码块
+  pre {
+    margin: var(--spacing-6) 0;
+    padding: var(--spacing-4);
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-md);
+    overflow-x: auto;
+
+    code {
+      background: none;
+      padding: 0;
+      color: inherit;
+    }
+  }
+
+  // 列表
+  ul, ol {
+    margin: var(--spacing-4) 0;
+    padding-left: var(--spacing-6);
+  }
+
+  ul {
+    list-style-type: disc;
+  }
+
+  ol {
+    list-style-type: decimal;
+  }
+
+  li {
+    margin-bottom: var(--spacing-2);
+
+    &::marker {
+      color: var(--accent-primary);
+    }
+  }
+
+  // 图片
+  img {
+    margin: var(--spacing-6) auto;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+  }
+
+  // 分割线
+  hr {
+    margin: var(--spacing-8) 0;
+    border: none;
+    height: 1px;
+    background: var(--border-color);
+  }
+
+  // 表格
+  table {
+    width: 100%;
+    margin: var(--spacing-6) 0;
+    border-collapse: collapse;
+
+    th, td {
+      padding: var(--spacing-3) var(--spacing-4);
+      border: 1px solid var(--border-color);
+      text-align: left;
+    }
+
+    th {
+      background: var(--bg-secondary);
+      font-weight: 600;
+    }
+
+    tr:nth-child(even) {
+      background: var(--bg-secondary);
+    }
+  }
+}
+
+// ========== 日式装饰分隔线 ==========
+.divider {
+  display: flex;
+  align-items: center;
+  margin: var(--spacing-6) 0;
+  color: var(--text-tertiary);
+
+  &::before,
+  &::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border-color);
+  }
+
+  &::before {
+    margin-right: var(--spacing-4);
+  }
+
+  &::after {
+    margin-left: var(--spacing-4);
+  }
+}
+
+// ========== "完"字结尾装饰 ==========
+.end-mark {
+  text-align: center;
+  margin: var(--spacing-12) 0 var(--spacing-8);
+  color: var(--text-tertiary);
+  font-size: var(--text-sm);
+
+  &::before {
+    content: '─────';
+    margin-right: var(--spacing-4);
+    letter-spacing: -0.2em;
+  }
+
+  &::after {
+    content: '─────';
+    margin-left: var(--spacing-4);
+    letter-spacing: -0.2em;
+  }
+}
