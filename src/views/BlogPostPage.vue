@@ -33,7 +33,10 @@ import NavBar from "@/components/NavBar.vue";
 import MarkdownIt from "markdown-it";
 import hljs from "highlight.js";
 import 'highlight.js/styles/atom-one-light.css';
-import 'highlightjs-line-numbers.js';
+
+// highlightjs-line-numbers.js 需要 window.hljs
+window.hljs = hljs;
+require('highlightjs-line-numbers.js');
 
 export default {
   name: "BlogPostPage",
@@ -242,7 +245,7 @@ export default {
 
 .post-content pre code {
   display: block;
-  padding: var(--spacing-6) var(--spacing-4) var(--spacing-4);
+  padding: var(--spacing-6) var(--spacing-3) var(--spacing-3) var(--spacing-2);
   font-family: var(--font-mono);
   font-size: var(--text-sm);
   line-height: var(--leading-relaxed);
