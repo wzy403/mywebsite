@@ -224,9 +224,25 @@ export default {
   position: relative;
   margin: var(--spacing-6) 0;
   border-radius: var(--radius-md);
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
   background: var(--code-bg);
   border: 1px solid var(--code-border);
+}
+
+/* 代码块横向滚动条 - 常驻显示在容器底部 */
+.post-content .code-block::-webkit-scrollbar {
+  height: 5px;
+}
+
+.post-content .code-block::-webkit-scrollbar-track {
+  background: var(--code-bg);
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+}
+
+.post-content .code-block::-webkit-scrollbar-thumb {
+  background: var(--text-tertiary);
+  border-radius: 3px;
 }
 
 /* 语言角标 - 左上角 */
@@ -251,7 +267,9 @@ export default {
   font-family: var(--font-mono);
   font-size: var(--text-sm);
   line-height: var(--leading-relaxed);
-  overflow-x: auto;
+  white-space: pre;
+  width: fit-content;
+  min-width: 100%;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
 }
