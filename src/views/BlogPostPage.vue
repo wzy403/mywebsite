@@ -278,6 +278,11 @@ export default {
   padding-top: 12px;
 }
 
+/* 代码块 - 上下对称 */
+.post-content pre code.hljs {
+  padding-bottom: 12px;
+}
+
 /* 行号表格 - 紧凑布局（覆盖 typography.scss 的全局表格样式） */
 .post-content .code-block table.hljs-ln,
 .post-content table.hljs-ln {
