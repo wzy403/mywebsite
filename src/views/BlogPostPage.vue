@@ -258,7 +258,7 @@ export default {
   border-collapse: collapse;
   border-spacing: 0;
   width: 100%;
-  margin: 0;
+  margin: 12px 0 0 0;
   border: none;
 }
 
