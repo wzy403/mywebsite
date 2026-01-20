@@ -62,18 +62,20 @@ mywebsite/
 ├── public/
 ├── src/
 │   ├── assets/
-│   │   └── blog/
+│   │   ├── blog/
 │   │   │   └── blogImg/
 │   │   └── img/
 │   ├── components/
-|   ├── router/
+│   ├── composables/
+│   ├── router/
+│   ├── styles/
 │   ├── views/
 │   ├── App.vue
 │   └── main.js
 ├── .gitignore
 ├── README.md
 ├── package.json
-└── webpack.config.js
+└── vue.config.js
 ```
 
 ## Contributing
