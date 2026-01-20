@@ -391,9 +391,25 @@ export default {
   margin: var(--spacing-1) 0;
 }
 
+/* 代码块选中样式 - 浅蓝色背景，保持代码高亮 */
+.post-content .code-block ::selection,
+.post-content .code-block code ::selection,
+.post-content pre code ::selection {
+  background: rgba(173, 214, 255, 0.5) !important;
+  color: inherit !important;
+}
+
 /* Highlight.js 主题覆盖 */
 .hljs {
   background: transparent !important;
+}
+
+/* 深色模式代码块选中样式 */
+[data-theme="dark"] .post-content .code-block ::selection,
+[data-theme="dark"] .post-content .code-block code ::selection,
+[data-theme="dark"] .post-content pre code ::selection {
+  background: rgba(100, 160, 220, 0.4) !important;
+  color: inherit !important;
 }
 
 /* 深色模式语法高亮覆盖 */
