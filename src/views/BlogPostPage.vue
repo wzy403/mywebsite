@@ -447,11 +447,12 @@ export default {
 
 .end-mark::before,
 .end-mark::after {
-  content: '';
+  content: '' !important;
   width: 60px;
   height: 1px;
   background: var(--border-color);
   margin: 0 var(--spacing-4);
+  letter-spacing: normal;
 }
 
 .post-info {
