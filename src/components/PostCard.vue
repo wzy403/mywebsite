@@ -52,18 +52,20 @@ export default {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.post-card:hover {
-  background: var(--bg-tertiary);
-  transform: translateX(8px);
-}
+@media (hover: hover) {
+  .post-card:hover {
+    background: var(--bg-tertiary);
+    transform: translateX(8px);
+  }
 
-.post-card:hover .post-title {
-  color: var(--accent-primary);
-}
+  .post-card:hover .post-title {
+    color: var(--accent-primary);
+  }
 
-.post-card:hover .post-arrow {
-  opacity: 1;
-  transform: translateX(4px);
+  .post-card:hover .post-arrow {
+    opacity: 1;
+    transform: translateX(4px);
+  }
 }
 
 .post-date {
