@@ -92,8 +92,11 @@ ul, ol {
 
 // ========== Selection样式 ==========
 ::selection {
-  background: var(--accent-secondary);
-  color: var(--text-primary);
+  background: rgba(173, 214, 255, 0.5);
+}
+
+[data-theme="dark"] ::selection {
+  background: rgba(100, 160, 220, 0.4);
 }
 
 // ========== 容器 ==========
