@@ -37,6 +37,14 @@
   --terminal-text: #E8E4DF;
   --terminal-prompt: #B4D4B0;
 
+  // 代码块配色 (Atom One Light)
+  --code-bg: #FAFAFA;
+  --code-border: #E0DCD5;
+  --code-lang-bg: #E8E8E8;
+  --code-lang-text: #666666;
+  --code-line-number: #999999;
+  --code-line-border: #E0E0E0;
+
   // 终端标签色
   --tag-name: #7EB5A6;
   --tag-school: #D4A5A5;
@@ -148,6 +156,14 @@
   --terminal-bg: #1A1917;
   --terminal-text: #E8E4DF;
   --terminal-prompt: #C8E8C4;
+
+  // 代码块配色 (Atom One Dark)
+  --code-bg: #282C34;
+  --code-border: #3A3735;
+  --code-lang-bg: #3E4451;
+  --code-lang-text: #ABB2BF;
+  --code-line-number: #636D83;
+  --code-line-border: #3E4451;
 
   // 终端标签色
   --tag-name: #8ECAB8;

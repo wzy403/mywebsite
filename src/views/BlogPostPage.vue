@@ -32,6 +32,8 @@
 import NavBar from "@/components/NavBar.vue";
 import MarkdownIt from "markdown-it";
 import hljs from "highlight.js";
+import 'highlight.js/styles/atom-one-light.css';
+import 'highlightjs-line-numbers.js';
 
 export default {
   name: "BlogPostPage",
@@ -50,7 +52,7 @@ export default {
   },
   mounted() {
     this.$nextTick(() => {
-      this.highlightCode();
+      hljs.initLineNumbersOnLoad();
     });
     window.scrollTo(0, 0);
   },
@@ -65,7 +67,7 @@ export default {
         highlight: function (str, lang) {
           if (lang && hljs.getLanguage(lang)) {
             try {
-              return `<pre class="code-block"><div class="code-header"><span class="code-lang">${lang}</span></div><code class="hljs language-${lang}">${hljs.highlight(str, { language: lang }).value}</code></pre>`;
+              return `<pre class="code-block"><span class="code-lang-badge">${lang}</span><code class="hljs language-${lang}">${hljs.highlight(str, { language: lang }).value}</code></pre>`;
             } catch (_e) {
               // highlight failed, fallback to default
             }
@@ -79,11 +81,6 @@ export default {
     }
   },
   methods: {
-    highlightCode() {
-      document.querySelectorAll('pre code.hljs').forEach((block) => {
-        hljs.highlightElement(block);
-      });
-    },
     getAllFileName() {
       const requireContext = require.context("@/assets/blog", false, /\.md$/);
       const fileNames = requireContext
@@ -219,35 +216,84 @@ export default {
 
 /* 代码块样式 */
 .post-content .code-block {
+  position: relative;
   margin: var(--spacing-6) 0;
   border-radius: var(--radius-md);
   overflow: hidden;
-  background: var(--bg-tertiary);
+  background: var(--code-bg);
+  border: 1px solid var(--code-border);
 }
 
-.post-content .code-header {
-  display: flex;
-  align-items: center;
-  padding: var(--spacing-2) var(--spacing-4);
-  background: var(--border-color);
-  border-bottom: 1px solid var(--border-color);
-}
-
-.post-content .code-lang {
-  font-size: var(--text-xs);
+/* 语言角标 - 左上角 */
+.post-content .code-lang-badge {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 2px 10px;
+  font-size: 11px;
   font-family: var(--font-mono);
-  color: var(--text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  background: var(--code-lang-bg);
+  color: var(--code-lang-text);
+  border-radius: 0 0 var(--radius-sm) 0;
+  z-index: 1;
 }
 
 .post-content pre code {
   display: block;
-  padding: var(--spacing-4);
+  padding: var(--spacing-6) var(--spacing-4) var(--spacing-4);
   font-family: var(--font-mono);
   font-size: var(--text-sm);
   line-height: var(--leading-relaxed);
   overflow-x: auto;
+}
+
+/* 行号表格 - 紧凑布局（覆盖 typography.scss 的全局表格样式） */
+.post-content .code-block table.hljs-ln,
+.post-content table.hljs-ln {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  margin: 0;
+  border: none;
+}
+
+.post-content .code-block table.hljs-ln tr,
+.post-content table.hljs-ln tr {
+  background: transparent !important;
+  border: none !important;
+}
+
+.post-content .code-block table.hljs-ln td,
+.post-content table.hljs-ln td {
+  padding: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  line-height: var(--leading-relaxed);
+}
+
+/* 行号列 - 带竖线分割 */
+.post-content .code-block .hljs-ln-numbers,
+.post-content .hljs-ln-numbers {
+  text-align: right;
+  color: var(--code-line-number);
+  border-right: 1px solid var(--code-line-border) !important;
+  border-top: none !important;
+  border-bottom: none !important;
+  border-left: none !important;
+  padding: 0 12px 0 0 !important;
+  user-select: none;
+  vertical-align: top;
+  width: 1%;
+  white-space: nowrap;
+}
+
+/* 代码列 */
+.post-content .code-block .hljs-ln-code,
+.post-content .hljs-ln-code {
+  padding: 0 0 0 16px !important;
+  white-space: pre;
 }
 
 /* 行内代码 */
@@ -262,7 +308,6 @@ export default {
 
 .post-content pre code {
   background: transparent;
-  padding: 0;
   color: inherit;
 }
 
@@ -348,6 +393,38 @@ export default {
 .hljs {
   background: transparent !important;
 }
+
+/* 深色模式语法高亮覆盖 */
+[data-theme="dark"] .hljs {
+  background: transparent !important;
+}
+[data-theme="dark"] .hljs-keyword,
+[data-theme="dark"] .hljs-selector-tag { color: #C678DD; }
+[data-theme="dark"] .hljs-string,
+[data-theme="dark"] .hljs-doctag { color: #98C379; }
+[data-theme="dark"] .hljs-number { color: #D19A66; }
+[data-theme="dark"] .hljs-function .hljs-title,
+[data-theme="dark"] .hljs-title.function_ { color: #61AFEF; }
+[data-theme="dark"] .hljs-comment { color: #5C6370; font-style: italic; }
+[data-theme="dark"] .hljs-title { color: #61AFEF; }
+[data-theme="dark"] .hljs-params { color: #ABB2BF; }
+[data-theme="dark"] .hljs-built_in { color: #E6C07B; }
+[data-theme="dark"] .hljs-literal,
+[data-theme="dark"] .hljs-type { color: #56B6C2; }
+[data-theme="dark"] .hljs-attr,
+[data-theme="dark"] .hljs-attribute { color: #D19A66; }
+[data-theme="dark"] .hljs-variable,
+[data-theme="dark"] .hljs-template-variable { color: #E06C75; }
+[data-theme="dark"] .hljs-class .hljs-title,
+[data-theme="dark"] .hljs-title.class_ { color: #E6C07B; }
+[data-theme="dark"] .hljs-name,
+[data-theme="dark"] .hljs-selector-id,
+[data-theme="dark"] .hljs-selector-class { color: #E06C75; }
+[data-theme="dark"] .hljs-regexp { color: #98C379; }
+[data-theme="dark"] .hljs-symbol { color: #56B6C2; }
+[data-theme="dark"] .hljs-meta { color: #61AFEF; }
+[data-theme="dark"] .hljs-deletion { color: #E06C75; }
+[data-theme="dark"] .hljs-addition { color: #98C379; }
 
 /* 响应式 */
 @media (max-width: 768px) {
