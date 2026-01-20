@@ -588,10 +588,10 @@ export default {
 
 .post-content .code-copy-btn.copied {
   opacity: 1;
-  background: var(--accent-primary);
-  color: var(--bg-primary);
+  background: var(--border-color);
+  color: var(--text-primary);
   transform: translateY(0);
-  animation: copySuccess 0.4s ease;
+  animation: copySuccess 0.3s ease;
 }
 
 .post-content .code-copy-btn.copied .copy-icon {
@@ -600,27 +600,26 @@ export default {
 
 .post-content .code-copy-btn.copied .check-icon {
   display: block;
-  animation: checkPop 0.4s ease;
+  animation: checkPop 0.3s ease;
 }
 
 @keyframes copySuccess {
   0% { transform: scale(1); }
-  30% { transform: scale(1.15); }
-  60% { transform: scale(0.95); }
+  50% { transform: scale(1.08); }
   100% { transform: scale(1); }
 }
 
 @keyframes checkPop {
   0% {
-    transform: scale(0) rotate(-45deg);
+    transform: scale(0);
     opacity: 0;
   }
-  50% {
-    transform: scale(1.2) rotate(5deg);
+  60% {
+    transform: scale(1.15);
     opacity: 1;
   }
   100% {
-    transform: scale(1) rotate(0);
+    transform: scale(1);
     opacity: 1;
   }
 }
