@@ -588,7 +588,7 @@ export default {
 
 .post-content .code-copy-btn.copied {
   opacity: 1;
-  background: var(--accent-tertiary);
+  background: var(--accent-primary);
   color: var(--bg-primary);
   transform: translateY(0);
   animation: copySuccess 0.4s ease;
