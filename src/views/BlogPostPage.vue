@@ -429,14 +429,14 @@ export default {
 
 /* 文章结尾 */
 .post-footer {
-  margin-top: var(--spacing-12);
-  padding-top: var(--spacing-8);
+  margin-top: var(--spacing-5);
+  padding-top: var(--spacing-5);
   /* border-top: 1px solid var(--border-color); */
 }
 
 .end-mark {
   width: 100%;
-  margin-bottom: var(--spacing-6);
+  margin: 0 0 var(--spacing-6) 0 !important;
   font-family: var(--font-cursive);
   font-size: var(--text-lg);
   color: var(--text-tertiary);
