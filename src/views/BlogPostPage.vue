@@ -56,6 +56,7 @@ export default {
   mounted() {
     this.$nextTick(() => {
       hljs.initLineNumbersOnLoad();
+      this.initCopyButtons();
     });
     window.scrollTo(0, 0);
   },
@@ -70,14 +71,17 @@ export default {
         highlight: function (str, lang) {
           const lineCount = str.trim().split('\n').length;
           const singleLineClass = lineCount === 1 ? ' no-line-numbers' : '';
+          const encodedCode = encodeURIComponent(str);
+          const copyButton = `<button class="code-copy-btn" type="button" aria-label="Copy code"><svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></button>`;
+
           if (lang && hljs.getLanguage(lang)) {
             try {
-              return `<pre class="code-block"><span class="code-lang-badge">${lang}</span><code class="hljs language-${lang}${singleLineClass}">${hljs.highlight(str, { language: lang }).value}</code></pre>`;
+              return `<pre class="code-block" data-code="${encodedCode}"><span class="code-lang-badge">${lang}</span>${copyButton}<code class="hljs language-${lang}${singleLineClass}">${hljs.highlight(str, { language: lang }).value}</code></pre>`;
             } catch (_e) {
               // highlight failed, fallback to default
             }
           }
-          return `<pre class="code-block"><code class="hljs${singleLineClass}">${md.utils.escapeHtml(str)}</code></pre>`;
+          return `<pre class="code-block" data-code="${encodedCode}">${copyButton}<code class="hljs${singleLineClass}">${md.utils.escapeHtml(str)}</code></pre>`;
         }
       });
       this.postContent = md.render(markdownContent);
@@ -129,6 +133,43 @@ export default {
       if (!date) return '';
       const options = { year: "numeric", month: "long", day: "numeric", timeZone: "UTC" };
       return new Date(date).toLocaleDateString("en-US", options);
+    },
+    initCopyButtons() {
+      const copyButtons = document.querySelectorAll('.code-copy-btn');
+      copyButtons.forEach(button => {
+        button.addEventListener('click', this.handleCopyClick);
+      });
+    },
+    async handleCopyClick(event) {
+      const button = event.currentTarget;
+      const pre = button.closest('.code-block');
+      const encodedCode = pre.getAttribute('data-code');
+      const code = decodeURIComponent(encodedCode);
+
+      try {
+        await navigator.clipboard.writeText(code);
+        this.showCopySuccess(button);
+      } catch (err) {
+        const textarea = document.createElement('textarea');
+        textarea.value = code;
+        textarea.style.position = 'fixed';
+        textarea.style.left = '-9999px';
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
+          document.execCommand('copy');
+          this.showCopySuccess(button);
+        } catch (e) {
+          console.error('Copy failed:', e);
+        }
+        document.body.removeChild(textarea);
+      }
+    },
+    showCopySuccess(button) {
+      button.classList.add('copied');
+      setTimeout(() => {
+        button.classList.remove('copied');
+      }, 2000);
     },
   },
 };
@@ -487,6 +528,65 @@ export default {
   .end-mark::before,
   .end-mark::after {
     width: 40px;
+  }
+}
+
+/* 复制按钮 */
+.post-content .code-copy-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 24px;
+  background: var(--code-lang-bg);
+  color: var(--code-lang-text);
+  border: none;
+  border-radius: 0 0 0 var(--radius-sm);
+  cursor: pointer;
+  transition: background var(--transition-fast), color var(--transition-fast);
+  opacity: 0;
+  z-index: 1;
+}
+
+.post-content .code-block:hover .code-copy-btn {
+  opacity: 1;
+}
+
+.post-content .code-copy-btn:hover {
+  background: var(--accent-primary);
+  color: var(--bg-primary);
+}
+
+.post-content .code-copy-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+.post-content .code-copy-btn .check-icon {
+  display: none;
+}
+
+.post-content .code-copy-btn.copied {
+  opacity: 1;
+  background: var(--accent-tertiary);
+  color: var(--bg-primary);
+}
+
+.post-content .code-copy-btn.copied .copy-icon {
+  display: none;
+}
+
+.post-content .code-copy-btn.copied .check-icon {
+  display: block;
+}
+
+/* 移动端始终显示复制按钮 */
+@media (max-width: 768px) {
+  .post-content .code-copy-btn {
+    opacity: 1;
   }
 }
 </style>
