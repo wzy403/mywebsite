@@ -223,6 +223,7 @@ export default {
 .post-content .code-block {
   position: relative;
   margin: var(--spacing-6) 0;
+  padding-bottom: 0;
   border-radius: var(--radius-md);
   overflow: hidden;
   background: var(--code-bg);
@@ -270,6 +271,10 @@ export default {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   overflow-x: auto;
+}
+
+.hljs {
+  padding-bottom: 12px;
 }
 
 /* 单行代码块（没有行号表格）需要更多 padding-top */
