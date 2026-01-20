@@ -273,10 +273,6 @@ export default {
   overflow-x: auto;
 }
 
-.hljs {
-  padding-bottom: 12px;
-}
-
 /* 单行代码块（没有行号表格）需要更多 padding-top */
 .post-content pre code.no-line-numbers {
   padding-top: 12px;
