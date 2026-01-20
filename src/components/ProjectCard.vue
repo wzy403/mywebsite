@@ -47,6 +47,9 @@ export default {
 
 <style scoped>
 .project-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
@@ -68,6 +71,7 @@ export default {
 }
 
 .project-description {
+  flex-grow: 1;
   margin: 0 0 var(--spacing-4) 0;
   font-size: var(--text-sm);
   color: var(--text-secondary);

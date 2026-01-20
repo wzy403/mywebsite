@@ -93,11 +93,7 @@ export default {
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  margin: calc(var(--spacing-3) * -1);
-}
-
-.projects-grid > * {
-  margin: var(--spacing-3);
+  gap: var(--spacing-6);
 }
 
 /* 响应式 */
@@ -121,11 +117,7 @@ export default {
   }
 
   .projects-grid {
-    margin: calc(var(--spacing-2) * -1);
-  }
-
-  .projects-grid > * {
-    margin: var(--spacing-2);
+    gap: var(--spacing-4);
   }
 }
 </style>
