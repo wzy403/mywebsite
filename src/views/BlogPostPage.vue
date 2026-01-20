@@ -546,23 +546,40 @@ export default {
   border: none;
   border-radius: 0 0 0 var(--radius-sm);
   cursor: pointer;
-  transition: background var(--transition-fast), color var(--transition-fast);
   opacity: 0;
   z-index: 1;
+  transform: translateY(-4px);
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease,
+    background 0.2s ease,
+    color 0.2s ease;
 }
 
 .post-content .code-block:hover .code-copy-btn {
   opacity: 1;
+  transform: translateY(0);
 }
 
 .post-content .code-copy-btn:hover {
   background: var(--accent-primary);
   color: var(--bg-primary);
+  transform: scale(1.05);
+}
+
+.post-content .code-copy-btn:active {
+  transform: scale(0.95);
+  transition: transform 0.1s ease;
 }
 
 .post-content .code-copy-btn svg {
   width: 14px;
   height: 14px;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.post-content .code-copy-btn:hover .copy-icon {
+  transform: rotate(-8deg);
 }
 
 .post-content .code-copy-btn .check-icon {
@@ -573,6 +590,8 @@ export default {
   opacity: 1;
   background: var(--accent-tertiary);
   color: var(--bg-primary);
+  transform: translateY(0);
+  animation: copySuccess 0.4s ease;
 }
 
 .post-content .code-copy-btn.copied .copy-icon {
@@ -581,12 +600,36 @@ export default {
 
 .post-content .code-copy-btn.copied .check-icon {
   display: block;
+  animation: checkPop 0.4s ease;
+}
+
+@keyframes copySuccess {
+  0% { transform: scale(1); }
+  30% { transform: scale(1.15); }
+  60% { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+
+@keyframes checkPop {
+  0% {
+    transform: scale(0) rotate(-45deg);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2) rotate(5deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(0);
+    opacity: 1;
+  }
 }
 
 /* 移动端始终显示复制按钮 */
 @media (max-width: 768px) {
   .post-content .code-copy-btn {
     opacity: 1;
+    transform: translateY(0);
   }
 }
 </style>
