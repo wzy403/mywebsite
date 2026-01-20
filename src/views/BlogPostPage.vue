@@ -68,14 +68,16 @@ export default {
         linkify: true,
         typographer: true,
         highlight: function (str, lang) {
+          const lineCount = str.trim().split('\n').length;
+          const singleLineClass = lineCount === 1 ? ' no-line-numbers' : '';
           if (lang && hljs.getLanguage(lang)) {
             try {
-              return `<pre class="code-block"><span class="code-lang-badge">${lang}</span><code class="hljs language-${lang}">${hljs.highlight(str, { language: lang }).value}</code></pre>`;
+              return `<pre class="code-block"><span class="code-lang-badge">${lang}</span><code class="hljs language-${lang}${singleLineClass}">${hljs.highlight(str, { language: lang }).value}</code></pre>`;
             } catch (_e) {
               // highlight failed, fallback to default
             }
           }
-          return `<pre class="code-block"><code class="hljs">${md.utils.escapeHtml(str)}</code></pre>`;
+          return `<pre class="code-block"><code class="hljs${singleLineClass}">${md.utils.escapeHtml(str)}</code></pre>`;
         }
       });
       this.postContent = md.render(markdownContent);
@@ -250,6 +252,11 @@ export default {
   font-size: var(--text-sm);
   line-height: var(--leading-relaxed);
   overflow-x: auto;
+}
+
+/* 单行代码块（没有行号表格）需要更多 padding-top */
+.post-content pre code.no-line-numbers {
+  padding-top: 12px;
 }
 
 /* 行号表格 - 紧凑布局（覆盖 typography.scss 的全局表格样式） */
