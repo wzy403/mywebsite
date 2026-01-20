@@ -1,5 +1,12 @@
 <template>
-  <div class="post-card" @click="navigateToPost">
+  <div
+    class="post-card"
+    :class="{ 'is-pressed': isPressed }"
+    @click="navigateToPost"
+    @touchstart="onTouchStart"
+    @touchend="onTouchEnd"
+    @touchcancel="onTouchEnd"
+  >
     <span class="post-date">{{ formatDate(post.date) }}</span>
     <h3 class="post-title">{{ post.title }}</h3>
     <span class="post-arrow">→</span>
@@ -7,6 +14,7 @@
 </template>
 
 <script>
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 export default {
@@ -19,6 +27,7 @@ export default {
   },
   setup(props) {
     const router = useRouter();
+    const isPressed = ref(false);
 
     const navigateToPost = () => {
       router.push(`/blog/${props.post.id}`);
@@ -32,9 +41,20 @@ export default {
       return `${month} ${day}`;
     };
 
+    const onTouchStart = () => {
+      isPressed.value = true;
+    };
+
+    const onTouchEnd = () => {
+      isPressed.value = false;
+    };
+
     return {
       navigateToPost,
-      formatDate
+      formatDate,
+      isPressed,
+      onTouchStart,
+      onTouchEnd
     };
   }
 };
@@ -52,6 +72,7 @@ export default {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* 桌面端 hover 效果 */
 @media (hover: hover) {
   .post-card:hover {
     background: var(--bg-tertiary);
@@ -66,6 +87,20 @@ export default {
     opacity: 1;
     transform: translateX(4px);
   }
+}
+
+/* 移动端点击效果 */
+.post-card {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.post-card.is-pressed {
+  transform: scale(0.97);
+  background: var(--bg-tertiary);
+}
+
+.post-card.is-pressed .post-title {
+  color: var(--accent-primary);
 }
 
 .post-date {
