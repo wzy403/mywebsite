@@ -431,11 +431,11 @@ export default {
 .post-footer {
   margin-top: var(--spacing-12);
   padding-top: var(--spacing-8);
-  border-top: 1px solid var(--border-color);
+  /* border-top: 1px solid var(--border-color); */
 }
 
 .end-mark {
-  text-align: center;
+  width: 100%;
   margin-bottom: var(--spacing-6);
   font-family: var(--font-cursive);
   font-size: var(--text-lg);
@@ -448,11 +448,18 @@ export default {
 .end-mark::before,
 .end-mark::after {
   content: '' !important;
-  width: 60px;
+  flex: 1;
   height: 1px;
   background: var(--border-color);
-  margin: 0 var(--spacing-4);
   letter-spacing: normal;
+}
+
+.end-mark::before {
+  margin-right: var(--spacing-4);
+}
+
+.end-mark::after {
+  margin-left: var(--spacing-4);
 }
 
 .post-info {
