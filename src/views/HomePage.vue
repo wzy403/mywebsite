@@ -13,6 +13,10 @@
           target="_blank"
           rel="noopener noreferrer"
           class="avatar-link"
+          :class="{ 'is-pressed': avatarPressed }"
+          @touchstart="onAvatarTouchStart"
+          @touchend="onAvatarTouchEnd"
+          @touchcancel="onAvatarTouchEnd"
         >
           <img
             class="avatar"
@@ -32,7 +36,14 @@
 
       <!-- 导航中枢 -->
       <nav class="hub-section">
-        <div class="hub-item" @click="navigateTo('blog')">
+        <div
+          class="hub-item"
+          :class="{ 'is-pressed': hubPressed === 'blog' }"
+          @click="navigateTo('blog')"
+          @touchstart="onHubTouchStart('blog')"
+          @touchend="onHubTouchEnd"
+          @touchcancel="onHubTouchEnd"
+        >
           <div class="hub-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
               <path d="M12 20h9"/>
@@ -42,7 +53,14 @@
           <span class="hub-label">Blog</span>
         </div>
 
-        <div class="hub-item" @click="navigateTo('project')">
+        <div
+          class="hub-item"
+          :class="{ 'is-pressed': hubPressed === 'project' }"
+          @click="navigateTo('project')"
+          @touchstart="onHubTouchStart('project')"
+          @touchend="onHubTouchEnd"
+          @touchcancel="onHubTouchEnd"
+        >
           <div class="hub-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
               <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
@@ -51,7 +69,14 @@
           <span class="hub-label">Projects</span>
         </div>
 
-        <div class="hub-item" @click="navigateTo('about')">
+        <div
+          class="hub-item"
+          :class="{ 'is-pressed': hubPressed === 'about' }"
+          @click="navigateTo('about')"
+          @touchstart="onHubTouchStart('about')"
+          @touchend="onHubTouchEnd"
+          @touchcancel="onHubTouchEnd"
+        >
           <div class="hub-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
               <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
@@ -61,7 +86,14 @@
           <span class="hub-label">About</span>
         </div>
 
-        <div class="hub-item" @click="openCV">
+        <div
+          class="hub-item"
+          :class="{ 'is-pressed': hubPressed === 'cv' }"
+          @click="openCV"
+          @touchstart="onHubTouchStart('cv')"
+          @touchend="onHubTouchEnd"
+          @touchcancel="onHubTouchEnd"
+        >
           <div class="hub-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
               <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
@@ -88,6 +120,7 @@
 </template>
 
 <script>
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import ThemeToggle from '@/components/ThemeToggle.vue';
 
@@ -98,6 +131,8 @@ export default {
   },
   setup() {
     const router = useRouter();
+    const avatarPressed = ref(false);
+    const hubPressed = ref(null);
 
     const navigateTo = (path) => {
       router.push(`/${path}`);
@@ -105,6 +140,22 @@ export default {
 
     const openCV = () => {
       window.open("/Zhengyu_Wang_Resume.pdf", "_blank");
+    };
+
+    const onAvatarTouchStart = () => {
+      avatarPressed.value = true;
+    };
+
+    const onAvatarTouchEnd = () => {
+      avatarPressed.value = false;
+    };
+
+    const onHubTouchStart = (name) => {
+      hubPressed.value = name;
+    };
+
+    const onHubTouchEnd = () => {
+      hubPressed.value = null;
     };
 
     // 生成随机粒子样式
@@ -127,7 +178,13 @@ export default {
     return {
       navigateTo,
       openCV,
-      particleStyle
+      particleStyle,
+      avatarPressed,
+      onAvatarTouchStart,
+      onAvatarTouchEnd,
+      hubPressed,
+      onHubTouchStart,
+      onHubTouchEnd
     };
   }
 };
@@ -212,10 +269,23 @@ export default {
   object-fit: cover;
 }
 
-.avatar:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 30px var(--shadow-color),
-              0 0 0 4px var(--accent-secondary);
+/* 桌面端 hover 效果 */
+@media (hover: hover) {
+  .avatar:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px var(--shadow-color),
+                0 0 0 4px var(--accent-secondary);
+  }
+}
+
+/* 移动端点击效果 */
+.avatar-link {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.avatar-link.is-pressed .avatar {
+  transform: scale(0.95);
+  box-shadow: 0 0 20px var(--shadow-color);
 }
 
 /* 信息区域 */
@@ -263,12 +333,29 @@ export default {
   transition: all 0.3s ease;
 }
 
-.hub-item:hover {
+/* 桌面端 hover 效果 */
+@media (hover: hover) {
+  .hub-item:hover {
+    background: var(--bg-secondary);
+  }
+
+  .hub-item:hover .hub-icon {
+    transform: translateY(-2px);
+    color: var(--accent-primary);
+  }
+}
+
+/* 移动端点击效果 */
+.hub-item {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.hub-item.is-pressed {
+  transform: scale(0.95);
   background: var(--bg-secondary);
 }
 
-.hub-item:hover .hub-icon {
-  transform: translateY(-2px);
+.hub-item.is-pressed .hub-icon {
   color: var(--accent-primary);
 }
 

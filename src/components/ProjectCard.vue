@@ -1,5 +1,11 @@
 <template>
-  <div class="project-card">
+  <div
+    class="project-card"
+    :class="{ 'is-pressed': isPressed }"
+    @touchstart="onTouchStart"
+    @touchend="onTouchEnd"
+    @touchcancel="onTouchEnd"
+  >
     <h3 class="project-name">{{ project.name }}</h3>
     <p class="project-description">{{ project.description }}</p>
     <div class="project-languages">
@@ -37,9 +43,20 @@ export default {
       default: () => ({}),
     },
   },
+  data() {
+    return {
+      isPressed: false,
+    };
+  },
   methods: {
     languageColor(language) {
       return colors[language] ? colors[language].color : 'var(--text-tertiary)';
+    },
+    onTouchStart() {
+      this.isPressed = true;
+    },
+    onTouchEnd() {
+      this.isPressed = false;
     },
   },
 };
@@ -57,9 +74,22 @@ export default {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.project-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
+/* 桌面端 hover 效果 */
+@media (hover: hover) {
+  .project-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--accent-primary);
+  }
+}
+
+/* 移动端点击效果 */
+.project-card {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.project-card.is-pressed {
+  transform: scale(0.97);
   border-color: var(--accent-primary);
 }
 
@@ -113,12 +143,14 @@ export default {
   transition: color var(--transition-fast);
 }
 
-.project-link:hover {
-  color: var(--accent-primary);
-}
+@media (hover: hover) {
+  .project-link:hover {
+    color: var(--accent-primary);
+  }
 
-.project-link:hover .link-icon {
-  transform: translate(2px, -2px);
+  .project-link:hover .link-icon {
+    transform: translate(2px, -2px);
+  }
 }
 
 .link-icon {
