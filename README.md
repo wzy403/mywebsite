@@ -4,13 +4,13 @@
 
 ## Overview
 
-This is a personal website project built using Vue 3. It features a blog section where content is written in Markdown.
+This is a personal website project built using Vue 3. It features a blog section where content is written in Markdown, a project page, and an about page.
 
 ## Features
 
-- **Vue 3:** The project is developed using Vue 3.
-- **Markdown Blog:** Blog posts are written in Markdown and stored in the `src/assets/blog` folder.
-- **Post Metadata:** Each blog post includes a metadata header.
+- **Markdown Blog:** Blog posts are written in Markdown and stored in the `src/assets/blog` folder. (See Blog Posts section below for template)
+- **Project Section:** Information stored in JSON. (See Folder Structure section for format)
+- **About Page:** Configuration stored in JSON. (See Folder Structure section for details)
 
 ## Installation
 
@@ -46,7 +46,7 @@ title: example title
 date: yyyy-MM-dd
 tags: 
   - sample tags1
-  - sample tags2
+  - sample tags2 (Optional)
 ---
 ```
 
@@ -59,21 +59,23 @@ tags:
 
 ```
 mywebsite/
-├── public/                 # Static assets
+├── public/                     # Static assets
 ├── src/
 │   ├── assets/
-│   │   ├── blog/           # Markdown blog posts
-│   │   │   └── blogImg/    # Images used in blog posts
-│   │   └── img/            # General website images
-│   ├── components/         # Reusable Vue components
-│   ├── composables/        # Vue 3 composition functions
-│   ├── router/             # Vue Router configuration
-│   ├── styles/             # Global SCSS styles
-│   ├── views/              # Page-level Vue components
-│   ├── App.vue             # Root Vue component
-│   └── main.js             # Application entry point
-├── .gitignore
-├── README.md
+│   │   ├── blog/               # Markdown blog posts
+│   │   │   └── blogImg/        # Images used in blog posts
+│   │   ├── img/                # General website images
+│   │   ├── aboutCommand.json   # Terminal commands for About page
+│   │   ├── projectesList.json  # Project portfolio data
+│   │   ├── blogTags.json       # Blog tag list
+│   │   └── colors.json         # Language color mappings
+│   ├── components/             # Reusable Vue components
+│   ├── composables/            # Vue 3 composition functions
+│   ├── router/                 # Vue Router configuration
+│   ├── styles/                 # Global SCSS styles
+│   ├── views/                  # Page-level Vue components
+│   ├── App.vue
+│   └── main.js
 ├── package.json
 └── vue.config.js
 ```
