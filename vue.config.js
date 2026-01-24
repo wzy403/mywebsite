@@ -18,6 +18,10 @@ module.exports = {
       .use('raw-loader')
       .loader('raw-loader')
       .end();
+    config.plugin('html').tap(args => {
+      args[0].title = 'Zhengyu Wang | Code, Design, and Life';
+      return args;
+    })
   }
 };
 
