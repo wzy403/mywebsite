@@ -36,8 +36,8 @@ export default {
     const formatDate = (date) => {
       if (!date) return '';
       const d = new Date(date);
-      const month = d.toLocaleDateString('en-US', { month: 'short' });
-      const day = d.getDate();
+      const month = d.toLocaleDateString('en-US', { month: 'short', timeZone: 'UTC' });
+      const day = d.getUTCDate();
       return `${month} ${day}`;
     };
 
